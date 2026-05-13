@@ -10,7 +10,7 @@ export function listGermanVoices(): SpeechSynthesisVoice[] {
 }
 
 export function speak(text: string, voiceURI: string | null): void {
-  if (!ttsAvailable()) return;
+  if (!ttsAvailable() || !text.trim()) return;
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "de-DE";
   if (voiceURI) {
