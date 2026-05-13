@@ -1,0 +1,41 @@
+{
+  "id": "de-a1",
+  "language": "de",
+  "level": "A1",
+  "name": "Deutsch A1",
+  "words": [
+    { "id": "de-a1-hund",      "pos": "noun", "lemma": "Hund",      "article": "der", "plural": "Hunde",   "en": ["dog"],           "example": "Der Hund bellt laut im Garten." },
+    { "id": "de-a1-katze",     "pos": "noun", "lemma": "Katze",     "article": "die", "plural": "Katzen",  "en": ["cat"],           "example": "Die Katze schläft auf dem Sofa." },
+    { "id": "de-a1-haus",      "pos": "noun", "lemma": "Haus",      "article": "das", "plural": "Häuser", "en": ["house"],       "example": "Das Haus ist sehr alt." },
+    { "id": "de-a1-frau",      "pos": "noun", "lemma": "Frau",      "article": "die", "plural": "Frauen",  "en": ["woman"],         "example": "Die Frau liest ein Buch." },
+    { "id": "de-a1-mann",      "pos": "noun", "lemma": "Mann",      "article": "der", "plural": "Männer", "en": ["man"],         "example": "Der Mann trinkt Kaffee." },
+    { "id": "de-a1-kind",      "pos": "noun", "lemma": "Kind",      "article": "das", "plural": "Kinder",  "en": ["child"],         "example": "Das Kind spielt im Park." },
+    { "id": "de-a1-auto",      "pos": "noun", "lemma": "Auto",      "article": "das", "plural": "Autos",   "en": ["car"],           "example": "Das Auto ist rot." },
+    { "id": "de-a1-strasse",   "pos": "noun", "lemma": "Straße", "article": "die", "plural": "Straßen", "en": ["street", "road"], "example": "Die Straße ist breit." },
+    { "id": "de-a1-stadt",     "pos": "noun", "lemma": "Stadt",     "article": "die", "plural": "Städte", "en": ["city", "town"], "example": "Die Stadt ist groß." },
+    { "id": "de-a1-buch",      "pos": "noun", "lemma": "Buch",      "article": "das", "plural": "Bücher", "en": ["book"],       "example": "Das Buch liegt auf dem Tisch." },
+    { "id": "de-a1-wasser",    "pos": "noun", "lemma": "Wasser",    "article": "das", "plural": null,      "en": ["water"],         "example": "Ich trinke Wasser." },
+    { "id": "de-a1-brot",      "pos": "noun", "lemma": "Brot",      "article": "das", "plural": "Brote",   "en": ["bread"],         "example": "Wir kaufen Brot." },
+
+    { "id": "de-a1-sein",      "pos": "verb", "lemma": "sein",      "aux": "sein",  "partizip": "gewesen", "en": ["to be"],        "example": "Ich bin müde." },
+    { "id": "de-a1-haben",     "pos": "verb", "lemma": "haben",     "aux": "haben", "partizip": "gehabt",  "en": ["to have"],      "example": "Ich habe Zeit." },
+    { "id": "de-a1-gehen",     "pos": "verb", "lemma": "gehen",     "aux": "sein",  "partizip": "gegangen","en": ["to go", "to walk"], "example": "Ich gehe nach Hause." },
+    { "id": "de-a1-machen",    "pos": "verb", "lemma": "machen",    "aux": "haben", "partizip": "gemacht", "en": ["to do", "to make"], "example": "Was machst du?" },
+    { "id": "de-a1-kommen",    "pos": "verb", "lemma": "kommen",    "aux": "sein",  "partizip": "gekommen","en": ["to come"],      "example": "Er kommt aus Berlin." },
+    { "id": "de-a1-sprechen",  "pos": "verb", "lemma": "sprechen",  "aux": "haben", "partizip": "gesprochen","en": ["to speak"],   "example": "Sprichst du Deutsch?" },
+    { "id": "de-a1-trinken",   "pos": "verb", "lemma": "trinken",   "aux": "haben", "partizip": "getrunken","en": ["to drink"],    "example": "Ich trinke Tee." },
+    { "id": "de-a1-essen",     "pos": "verb", "lemma": "essen",     "aux": "haben", "partizip": "gegessen","en": ["to eat"],       "example": "Wir essen Brot." },
+    { "id": "de-a1-lesen",     "pos": "verb", "lemma": "lesen",     "aux": "haben", "partizip": "gelesen", "en": ["to read"],      "example": "Sie liest ein Buch." },
+    { "id": "de-a1-schreiben", "pos": "verb", "lemma": "schreiben", "aux": "haben", "partizip": "geschrieben","en": ["to write"], "example": "Er schreibt einen Brief." },
+
+    { "id": "de-a1-gross",     "pos": "adj",  "lemma": "groß", "en": ["big", "large", "tall"], "example": "Das Haus ist groß." },
+    { "id": "de-a1-klein",     "pos": "adj",  "lemma": "klein",     "en": ["small", "little"],     "example": "Die Katze ist klein." },
+    { "id": "de-a1-gut",       "pos": "adj",  "lemma": "gut",       "en": ["good"],                "example": "Das Essen ist gut." },
+    { "id": "de-a1-schlecht",  "pos": "adj",  "lemma": "schlecht",  "en": ["bad"],                 "example": "Das Wetter ist schlecht." },
+    { "id": "de-a1-neu",       "pos": "adj",  "lemma": "neu",       "en": ["new"],                 "example": "Mein Auto ist neu." },
+    { "id": "de-a1-alt",       "pos": "adj",  "lemma": "alt",       "en": ["old"],                 "example": "Das Haus ist alt." },
+
+    { "id": "de-a1-und",       "pos": "conj", "lemma": "und",       "en": ["and"],                 "example": "Ich und du." },
+    { "id": "de-a1-aber",      "pos": "conj", "lemma": "aber",      "en": ["but"],                 "example": "Klein aber fein." }
+  ]
+}
