@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SwipeFlow } from "./swipe-flow";
@@ -11,8 +11,14 @@ const deck: Deck = {
 };
 
 beforeEach(async () => {
+  // Pin the RNG so drawWord always picks w1 regardless of weights.
+  vi.spyOn(Math, "random").mockReturnValue(0);
   await db.delete();
   await db.open();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe("SwipeFlow", () => {

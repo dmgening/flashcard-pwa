@@ -23,6 +23,9 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // Precache deck JSONs so the app is fully usable offline on the
+        // first install — the runtime cache only fills after a hit.
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff,woff2,json}"],
         runtimeCaching: [
           {
             urlPattern: ({ url }) => url.pathname.startsWith("/decks/"),

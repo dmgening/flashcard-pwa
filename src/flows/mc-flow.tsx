@@ -27,11 +27,11 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
 
   const choices: Choice[] = useMemo(() => {
     if (!current) return [];
-    const distractors = pickDistractors(current, deck.words, 3, Math.random);
+    const rng = Math.random;
+    const distractors = pickDistractors(current, deck.words, 3, rng);
     const all: Choice[] = [{ word: current, correct: true }, ...distractors.map((w) => ({ word: w, correct: false }))];
-    // shuffle
     for (let i = all.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(rng() * (i + 1));
       [all[i], all[j]] = [all[j], all[i]];
     }
     return all;
@@ -42,7 +42,7 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
   if (!current) return <div className="p-4 text-neutral-500">No words.</div>;
 
   async function pick(c: Choice) {
-    if (picked) return;
+    if (picked !== null) return;
     setPicked(c.word.id);
     await onResult(c.correct);
   }

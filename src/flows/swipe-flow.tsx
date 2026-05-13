@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
 import { getStats } from "@/db/stats";
@@ -31,6 +31,7 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
   const [revealed, setRevealed] = useState(false);
   const [missCount, setMissCount] = useState(0);
   const [overlay, setOverlay] = useState<"hit" | "miss" | null>(null);
+  const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setRevealed(false);
@@ -39,6 +40,10 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
       getStats(deck.id, current.id).then((s) => setMissCount((s?.attempts ?? 0) - (s?.successes ?? 0)));
     }
   }, [current, deck.id]);
+
+  useEffect(() => () => {
+    if (overlayTimerRef.current !== null) clearTimeout(overlayTimerRef.current);
+  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -55,7 +60,9 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
   async function handleResult(success: boolean) {
     if (!current) return;
     setOverlay(success ? "hit" : "miss");
-    setTimeout(async () => {
+    if (overlayTimerRef.current !== null) clearTimeout(overlayTimerRef.current);
+    overlayTimerRef.current = setTimeout(async () => {
+      overlayTimerRef.current = null;
       await onResult(success);
     }, 250);
   }

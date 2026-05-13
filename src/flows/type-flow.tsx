@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
 import { diffTokens, isExactMatch } from "@/lib/diff";
@@ -12,8 +12,22 @@ export function TypeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
   const { current, onResult } = useStudySession(deck);
   const [input, setInput] = useState("");
   const [submitted, setSubmitted] = useState<null | { correct: boolean; expected: string; userInput: string }>(null);
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => { setInput(""); setSubmitted(null); }, [current]);
+  useEffect(() => {
+    setInput("");
+    setSubmitted(null);
+    // Cancel any pending auto-advance from the previous word so it can't
+    // double-record on the new one.
+    if (advanceTimerRef.current !== null) {
+      clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+  }, [current]);
+
+  useEffect(() => () => {
+    if (advanceTimerRef.current !== null) clearTimeout(advanceTimerRef.current);
+  }, []);
 
   if (!current) return <div className="p-4 text-neutral-500">No words.</div>;
 
@@ -28,8 +42,11 @@ export function TypeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
     const correct = isExactMatch(input, expected);
     setSubmitted({ correct, expected, userInput: input });
     if (correct) {
-      // Auto-advance on hit; on miss let the user read the diff
-      setTimeout(async () => { await onResult(true); }, 600);
+      // Auto-advance on hit; on miss let the user read the diff.
+      advanceTimerRef.current = setTimeout(async () => {
+        advanceTimerRef.current = null;
+        await onResult(true);
+      }, 600);
     }
   }
 
@@ -53,7 +70,7 @@ export function TypeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={onKey}
-        disabled={submitted !== null && !submitted.correct ? false : submitted !== null}
+        disabled={submitted?.correct === true}
         placeholder={placeholder}
         className={`w-full rounded-xl border px-4 py-3 text-lg bg-neutral-900 text-neutral-100 ${submitted && !submitted.correct ? "border-rose-700" : "border-neutral-800"}`}
       />
