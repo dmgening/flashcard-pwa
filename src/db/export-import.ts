@@ -55,7 +55,7 @@ export async function importAll(raw: unknown, mode: ImportMode): Promise<void> {
           wordId: incoming.wordId,
           attempts: existing.attempts + incoming.attempts,
           successes: existing.successes + incoming.successes,
-          lastSeenAt: incoming.lastSeenAt,
+          lastSeenAt: Math.max(existing.lastSeenAt, incoming.lastSeenAt),
           lastResult: useIncoming ? incoming.lastResult : existing.lastResult,
         } satisfies StatRow);
       }

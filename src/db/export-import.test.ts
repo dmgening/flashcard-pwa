@@ -40,8 +40,13 @@ describe("importAll", () => {
   });
 
   it("merge mode sums attempts/successes per (deck,word)", async () => {
-    await recordAttempt("d", "w1", true);
-    await recordAttempt("d", "w1", false);
+    // Seed existing row directly with a known small lastSeenAt so we can
+    // verify the merge picks the more recent timestamp.
+    await db.stats.put({
+      deckId: "d", wordId: "w1",
+      attempts: 2, successes: 1,
+      lastSeenAt: 100, lastResult: "hit",
+    });
     await importAll({
       version: 1,
       stats: [{ deckId: "d", wordId: "w1", attempts: 4, successes: 3, lastSeenAt: 999, lastResult: "miss" }],
@@ -51,6 +56,23 @@ describe("importAll", () => {
     expect(row?.attempts).toBe(6);
     expect(row?.successes).toBe(4);
     expect(row?.lastSeenAt).toBe(999);
+    expect(row?.lastResult).toBe("miss");
+  });
+
+  it("merge keeps the newer lastSeenAt when existing is more recent", async () => {
+    await db.stats.put({
+      deckId: "d", wordId: "w1",
+      attempts: 1, successes: 1,
+      lastSeenAt: 5000, lastResult: "hit",
+    });
+    await importAll({
+      version: 1,
+      stats: [{ deckId: "d", wordId: "w1", attempts: 1, successes: 0, lastSeenAt: 100, lastResult: "miss" }],
+      settings: (await getSettings()),
+    }, "merge");
+    const row = await db.stats.get(["d", "w1"]);
+    expect(row?.lastSeenAt).toBe(5000);
+    expect(row?.lastResult).toBe("hit");
   });
 
   it("exports ImportMode union", () => {
