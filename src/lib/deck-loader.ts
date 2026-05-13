@@ -3,7 +3,7 @@ import { deckSchema, type Deck } from "./schema";
 export const AVAILABLE_DECKS = ["de-a1"] as const;
 export type DeckId = (typeof AVAILABLE_DECKS)[number];
 
-export async function loadDeck(id: string): Promise<Deck> {
+export async function loadDeck(id: DeckId): Promise<Deck> {
   const url = `/decks/${id}.json`;
   const res = await fetch(url);
   if (!res.ok) {

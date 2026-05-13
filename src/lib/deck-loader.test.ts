@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { ZodError } from "zod";
 import { loadDeck, AVAILABLE_DECKS } from "./deck-loader";
 
 const validDeck = {
@@ -28,15 +29,15 @@ describe("loadDeck", () => {
 
   it("throws on HTTP failure", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 404 }));
-    await expect(loadDeck("missing")).rejects.toThrow(/deck/i);
+    await expect(loadDeck("de-a1")).rejects.toThrow(/HTTP 404/);
   });
 
-  it("throws on schema failure", async () => {
+  it("throws a ZodError on schema failure", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({ ...validDeck, level: "Z9" }),
     }));
-    await expect(loadDeck("bad")).rejects.toThrow();
+    await expect(loadDeck("de-a1")).rejects.toThrow(ZodError);
   });
 
   it("exports an AVAILABLE_DECKS list", () => {
