@@ -7,6 +7,8 @@ import { SettingsRoute } from "@/routes/settings";
 import { TabBar } from "./tab-bar";
 import { getSettings } from "@/db/dexie";
 
+const DEFAULT_DECK_ID = "de-a1";
+
 function Layout() {
   return (
     <div className="min-h-full pb-16">
@@ -16,25 +18,26 @@ function Layout() {
   );
 }
 
-function StudyRedirect() {
+function useActiveDeckRedirect(toPath: (id: string) => string) {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   useEffect(() => {
     getSettings().then((s) => {
-      const id = s.activeDeckId ?? "de-a1";
-      navigate(`/study/${id}`, { replace: true });
+      navigate(toPath(s.activeDeckId ?? DEFAULT_DECK_ID), { replace: true });
       setReady(true);
     });
-  }, [navigate]);
+  }, [navigate, toPath]);
+  return ready;
+}
+
+function StudyRedirect() {
+  const ready = useActiveDeckRedirect((id) => `/study/${id}`);
   return ready ? null : <div className="p-4 text-neutral-500">Loading…</div>;
 }
 
 function StatsRedirect() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    getSettings().then((s) => navigate(`/stats/${s.activeDeckId ?? "de-a1"}`, { replace: true }));
-  }, [navigate]);
-  return null;
+  const ready = useActiveDeckRedirect((id) => `/stats/${id}`);
+  return ready ? null : <div className="p-4 text-neutral-500">Loading…</div>;
 }
 
 export function AppRouter() {

@@ -22,6 +22,9 @@ export function drawWord({ words, stats, history, rng }: DrawInput): Word {
     const s = statByWordId.get(w.id);
     const attempts = s?.attempts ?? 0;
     const successes = s?.successes ?? 0;
+    // Unseen words (attempts == 0) collapse to successRate = 0, giving them the
+    // same max weight as a word that's been missed every time. This is deliberate
+    // — surface new words to the user quickly.
     const successRate = attempts > 0 ? successes / attempts : 0;
     let weight = (1 - successRate) + BASE;
     if (cooldown.has(w.id)) weight *= COOLDOWN_FACTOR;
