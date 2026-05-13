@@ -17,16 +17,20 @@ export function DecksRoute() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       for (const id of AVAILABLE_DECKS) {
+        if (cancelled) return;
         try {
           const deck = await loadDeck(id);
           const stats = await getStatsForDeck(id);
+          if (cancelled) return;
           setEntries((prev) => ({
             ...prev,
             [id]: { deck, mastery: computeMastery(deck.words.length, stats), error: null },
           }));
         } catch (e) {
+          if (cancelled) return;
           setEntries((prev) => ({
             ...prev,
             [id]: { deck: null, mastery: 0, error: (e as Error).message },
@@ -34,11 +38,17 @@ export function DecksRoute() {
         }
       }
     })();
+    return () => { cancelled = true; };
   }, []);
 
   async function pickDeck(id: string) {
-    await setSettings({ activeDeckId: id });
-    navigate(`/study/${id}`);
+    try {
+      await setSettings({ activeDeckId: id });
+      navigate(`/study/${id}`);
+    } catch (e) {
+      console.warn("pickDeck: setSettings failed, navigating anyway", e);
+      navigate(`/study/${id}`);
+    }
   }
 
   return (

@@ -14,19 +14,25 @@ export function StatsRoute() {
 
   useEffect(() => {
     if (!deckId) return;
+    let cancelled = false;
     (async () => {
       const d = await loadDeck(deckId as DeckId);
-      setDeck(d);
       const rows = await getStatsForDeck(deckId);
+      const top = await hardestWords(deckId, 20);
+      if (cancelled) return;
+      setDeck(d);
       setStats(rows);
-      setHardest(await hardestWords(deckId, 20));
+      setHardest(top);
     })();
+    return () => { cancelled = true; };
   }, [deckId]);
 
   if (!deck) return <div className="p-4 text-neutral-500">Loading…</div>;
 
+  // recordAttempt always writes attempts >= 1, so any row in `stats` is past the
+  // "new" stage. A word is "new" iff it has no row at all in this deck.
   const seenIds = new Set(stats.map((s) => s.wordId));
-  const newCount = deck.words.length - seenIds.size + stats.filter((s) => bucket(s) === "new").length;
+  const newCount = deck.words.length - seenIds.size;
   const learningCount = stats.filter((s) => bucket(s) === "learning").length;
   const masteredCount = stats.filter((s) => bucket(s) === "mastered").length;
 

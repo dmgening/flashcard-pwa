@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { ZodError } from "zod";
 import { getSettings, setSettings, type SettingsRow } from "@/db/dexie";
 import { exportAll, importAll } from "@/db/export-import";
 import { listGermanVoices, ttsAvailable } from "@/lib/tts";
@@ -45,8 +46,16 @@ export function SettingsRoute() {
       await importAll(parsed, mode);
       setMsg(`Imported (${mode}).`);
       setS(await getSettings());
+      // Clear the input so re-clicking import doesn't silently re-apply the same file.
+      if (fileRef.current) fileRef.current.value = "";
     } catch (e) {
-      setMsg(`Import failed: ${(e as Error).message}`);
+      if (e instanceof ZodError) {
+        setMsg("Import failed: file is not a valid flashcard export.");
+      } else if (e instanceof SyntaxError) {
+        setMsg("Import failed: file is not valid JSON.");
+      } else {
+        setMsg(`Import failed: ${e instanceof Error ? e.message : String(e)}`);
+      }
     }
   }
 
@@ -88,6 +97,7 @@ export function SettingsRoute() {
           <button onClick={() => doImport("merge")} className="flex-1 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2 text-sm">Import (merge)</button>
           <button onClick={() => doImport("replace")} className="flex-1 rounded-lg border border-rose-900 text-rose-300 px-3 py-2 text-sm">Import (replace)</button>
         </div>
+        <div className="text-[10px] text-neutral-500">Merge sums stats; settings are always overwritten by the import.</div>
         {msg && <div className="text-xs text-neutral-400">{msg}</div>}
       </section>
     </div>

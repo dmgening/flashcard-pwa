@@ -22,16 +22,26 @@ export function StudyRoute() {
 
   useEffect(() => {
     if (!deckId) return;
+    let cancelled = false;
     resetSession();
+    setFlow(null);
+    setDeck(null);
+    setError(null);
+    setMastery(0);
     (async () => {
       try {
         const d = await loadDeck(deckId as DeckId);
+        if (cancelled) return;
+        const stats = await getStatsForDeck(deckId);
+        if (cancelled) return;
         setDeck(d);
-        setMastery(computeMastery(d.words.length, await getStatsForDeck(deckId)));
+        setMastery(computeMastery(d.words.length, stats));
       } catch (e) {
-        setError((e as Error).message);
+        if (cancelled) return;
+        setError(e instanceof Error ? e.message : String(e));
       }
     })();
+    return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckId]);
 
