@@ -59,6 +59,7 @@ export function bucket(row: Pick<StatRow, "attempts" | "successes">): StatBucket
 export async function hardestWords(deckId: string, limit: number): Promise<StatRow[]> {
   const rows = await getStatsForDeck(deckId);
   return rows
+    .filter(r => r.attempts - r.successes > 0)
     .sort((a, b) => (b.attempts - b.successes) - (a.attempts - a.successes))
     .slice(0, limit);
 }

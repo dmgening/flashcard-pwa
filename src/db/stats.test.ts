@@ -53,12 +53,20 @@ describe("bucket", () => {
 });
 
 describe("hardestWords", () => {
-  it("returns words sorted by misses desc, limited", async () => {
+  it("returns words with at least one miss, sorted by misses desc", async () => {
     await recordAttempt("de-a1", "easy", true);
     for (let i = 0; i < 5; i++) await recordAttempt("de-a1", "hard", false);
     for (let i = 0; i < 2; i++) await recordAttempt("de-a1", "mid", false);
     const rows = await hardestWords("de-a1", 10);
-    expect(rows.map(r => r.wordId)).toEqual(["hard", "mid", "easy"]);
+    expect(rows.map(r => r.wordId)).toEqual(["hard", "mid"]);
+  });
+
+  it("respects the limit", async () => {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < i + 1; j++) await recordAttempt("de-a1", `w${i}`, false);
+    }
+    const rows = await hardestWords("de-a1", 2);
+    expect(rows.map(r => r.wordId)).toEqual(["w3", "w2"]);
   });
 });
 
