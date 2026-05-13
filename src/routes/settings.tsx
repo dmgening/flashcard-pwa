@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ZodError } from "zod";
-import { getSettings, setSettings, type SettingsRow } from "@/db/dexie";
+import { getSettings, type SettingsRow } from "@/db/dexie";
 import { exportAll, importAll } from "@/db/export-import";
 import { listGermanVoices, ttsAvailable } from "@/lib/tts";
+import { useSettingsStore } from "@/store/settings-store";
 
 export function SettingsRoute() {
   const [s, setS] = useState<SettingsRow | null>(null);
@@ -21,8 +22,10 @@ export function SettingsRoute() {
     }
   }, []);
 
+  const storeUpdate = useSettingsStore((st) => st.update);
+
   async function update(patch: Partial<Omit<SettingsRow, "id">>) {
-    await setSettings(patch);
+    await storeUpdate(patch);
     setS(await getSettings());
   }
 

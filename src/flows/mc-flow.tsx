@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
 import { pickDistractors } from "@/lib/distractors";
 import { speak, ttsAvailable } from "@/lib/tts";
+import { useSettingsStore } from "@/store/settings-store";
 
 function articleColor(article: "der" | "die" | "das"): string {
   return { der: "text-article-der", die: "text-article-die", das: "text-article-das" }[article];
@@ -24,6 +25,9 @@ type Choice = { word: Word; correct: boolean };
 export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
   const { current, onResult } = useStudySession(deck);
   const [picked, setPicked] = useState<string | null>(null);
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const soundOn = useSettingsStore((s) => s.soundOn);
+  const ttsVoiceURI = useSettingsStore((s) => s.ttsVoiceURI);
 
   const choices: Choice[] = useMemo(() => {
     if (!current) return [];
@@ -37,14 +41,28 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
     return all;
   }, [current, deck.words]);
 
-  useEffect(() => { setPicked(null); }, [current]);
+  useEffect(() => {
+    setPicked(null);
+    if (advanceTimerRef.current !== null) {
+      clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+  }, [current]);
+
+  useEffect(() => () => {
+    if (advanceTimerRef.current !== null) clearTimeout(advanceTimerRef.current);
+  }, []);
 
   if (!current) return <div className="p-4 text-neutral-500">No words.</div>;
 
-  async function pick(c: Choice) {
+  function pick(c: Choice) {
     if (picked !== null) return;
     setPicked(c.word.id);
-    await onResult(c.correct);
+    // Hold the right/wrong highlight long enough to actually be read.
+    advanceTimerRef.current = setTimeout(async () => {
+      advanceTimerRef.current = null;
+      await onResult(c.correct);
+    }, 600);
   }
 
   return (
@@ -53,8 +71,8 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
 
       <div className="text-center mb-5">
         <PromptWord word={current} />
-        {ttsAvailable() && (
-          <button onClick={() => speak(current.lemma, null)} className="text-lg opacity-50 mt-2">🔊</button>
+        {ttsAvailable() && soundOn && (
+          <button onClick={() => speak(current.lemma, ttsVoiceURI)} className="text-lg opacity-50 mt-2">🔊</button>
         )}
       </div>
 

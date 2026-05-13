@@ -3,6 +3,7 @@ import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
 import { getStats } from "@/db/stats";
 import { speak, ttsAvailable } from "@/lib/tts";
+import { useSettingsStore } from "@/store/settings-store";
 
 function articleColor(article: "der" | "die" | "das"): string {
   return { der: "text-article-der", die: "text-article-die", das: "text-article-das" }[article];
@@ -32,6 +33,8 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
   const [missCount, setMissCount] = useState(0);
   const [overlay, setOverlay] = useState<"hit" | "miss" | null>(null);
   const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const soundOn = useSettingsStore((s) => s.soundOn);
+  const ttsVoiceURI = useSettingsStore((s) => s.ttsVoiceURI);
 
   useEffect(() => {
     setRevealed(false);
@@ -107,9 +110,9 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
           </>
         )}
 
-        {ttsAvailable() && (
+        {ttsAvailable() && soundOn && (
           <button
-            onClick={(e) => { e.stopPropagation(); speak(current.lemma, null); }}
+            onClick={(e) => { e.stopPropagation(); speak(current.lemma, ttsVoiceURI); }}
             className="mt-5 text-xl opacity-50">🔊</button>
         )}
 
