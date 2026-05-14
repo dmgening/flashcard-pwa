@@ -52,4 +52,17 @@ describe("SwipeFlow", () => {
       expect(row?.successes).toBe(0);
     });
   });
+
+  it("renders without crashing under prefers-reduced-motion", async () => {
+    vi.stubGlobal("matchMedia", (q: string) => ({
+      matches: q === "(prefers-reduced-motion: reduce)",
+      media: q, addEventListener: vi.fn(), removeEventListener: vi.fn(),
+      addListener: vi.fn(), removeListener: vi.fn(), onchange: null, dispatchEvent: vi.fn(),
+    }));
+    render(<SwipeFlow deck={deck} onExit={() => {}} />);
+    await waitFor(() => expect(screen.getByText("Hund")).toBeInTheDocument());
+    fireEvent.click(screen.getByText("Hund"));
+    expect(screen.getByText("dog")).toBeInTheDocument();
+    vi.unstubAllGlobals();
+  });
 });
