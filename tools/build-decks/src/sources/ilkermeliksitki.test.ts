@@ -78,6 +78,16 @@ describe("parseTsv", () => {
       expect(e.level).toBe("A1");
     }
   });
+
+  it("skips rows whose lemma is empty after stripping the polysemy marker", () => {
+    // B1 has rows like `(2)\t<example>\t<en>` that are continuation markers
+    // for a preceding entry. After stripping `(2)` the lemma becomes "",
+    // which would otherwise produce a malformed slug and crash the build.
+    const tsv = "(2)\tRate mal!\tGuess!\n" + fixture;
+    const e = parseTsv("B1", tsv);
+    expect(e.find((x) => x.lemma === "")).toBeUndefined();
+    expect(e.length).toBe(entries.length);
+  });
 });
 
 describe("IlkermeliksitkiSource", () => {

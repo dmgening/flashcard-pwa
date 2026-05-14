@@ -1,0 +1,428 @@
+{
+  "level": "B1",
+  "source": 2782,
+  "built": 2709,
+  "dropped": 70,
+  "drops": [
+    {
+      "lemma": "anerkennen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Meine Ausbildung wird hier nicht anerkannt."
+    },
+    {
+      "lemma": "ankommen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wann kommt der Zug in Hamburg an?"
+    },
+    {
+      "lemma": "anschaffen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wir haben uns neue Möbel angeschafft."
+    },
+    {
+      "lemma": "anschnallen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Vergiss nicht, dich anzuschnallen."
+    },
+    {
+      "lemma": "aufhalten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wo hält er sich gerade auf? – In München."
+    },
+    {
+      "lemma": "aufhören",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es hört nicht auf zu schneien."
+    },
+    {
+      "lemma": "aufräumen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Vor meinem Urlaub muss ich unbedingt noch meinen Schreibtisch aufräumen."
+    },
+    {
+      "lemma": "aufregen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es regt mich auf, dass ich schon wieder Überstunden machen muss."
+    },
+    {
+      "lemma": "aufstehen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich stehe jeden Morgen um sechs Uhr auf."
+    },
+    {
+      "lemma": "auftreten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Nächste Woche tritt in der Stadthalle eine berühmte Musikgruppe auf."
+    },
+    {
+      "lemma": "außen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wir haben das Schloss nur von außen gesehen."
+    },
+    {
+      "lemma": "basteln",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Die Kinder basteln ein Vogelhaus."
+    },
+    {
+      "lemma": "bedienen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Werden Sie schon bedient?"
+    },
+    {
+      "lemma": "begrüßen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Der Gastgeber begrüßt seine Gäste."
+    },
+    {
+      "lemma": "behaupten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Er behauptet, unsere Meinung sei nicht wichtig."
+    },
+    {
+      "lemma": "beißen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Pass auf, dass dich der Hund nicht beißt!"
+    },
+    {
+      "lemma": "beruhigen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Beruhigen Sie sich bitte. Es ist alles in Ordnung."
+    },
+    {
+      "lemma": "Bescheid sagen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich erkundige mich nach den Terminen und sage Ihnen dann Bescheid."
+    },
+    {
+      "lemma": "Bescheid geben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Kannst du mir bis morgen Bescheid geben?"
+    },
+    {
+      "lemma": "beschränken",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Die Teilnehmerzahl für den Kurs ist beschränkt."
+    },
+    {
+      "lemma": "beschreiben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Kannst du mir den Weg zum Flughafen beschreiben?"
+    },
+    {
+      "lemma": "sich beschweren",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wo können wir uns beschweren?"
+    },
+    {
+      "lemma": "besetzen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Dieser Platz ist besetzt."
+    },
+    {
+      "lemma": "besitzen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Besitzt Ihre Frau ein eigenes Auto?"
+    },
+    {
+      "lemma": "besorgen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Soll ich die Eintrittskarten besorgen?"
+    },
+    {
+      "lemma": "bestehen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Das Modul Lesen besteht aus fünf Teilen."
+    },
+    {
+      "lemma": "bleiben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich bleibe heute zu Hause."
+    },
+    {
+      "lemma": "brauchen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich brauche ein Auto."
+    },
+    {
+      "lemma": "deswegen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich habe falsch geparkt. Deswegen habe ich einen Strafzettel bekommen."
+    },
+    {
+      "lemma": "dünn",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Mein Sohn ist sehr dünn. Er isst zu wenig."
+    },
+    {
+      "lemma": "dürfen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Dürfen wir heute länger fernsehen?"
+    },
+    {
+      "lemma": "eben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich bin eben erst angekommen."
+    },
+    {
+      "lemma": "eilen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es eilt sehr. Bitte machen Sie schnell."
+    },
+    {
+      "lemma": "einfallen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Mir ist wieder eingefallen, wie das Buch heißt."
+    },
+    {
+      "lemma": "beeinflussen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Dieses Ereignis hat die Wahlen beeinflusst."
+    },
+    {
+      "lemma": "einpacken",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Hast du Handtücher eingepackt?"
+    },
+    {
+      "lemma": "einrichten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich habe meine Wohnung selbst eingerichtet."
+    },
+    {
+      "lemma": "einschalten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Können Sie bitte die Heizung einschalten?"
+    },
+    {
+      "lemma": "einzeln",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Dieses Mineralwasser gibt es nur als Sechserpack, nicht einzeln."
+    },
+    {
+      "lemma": "unentschieden",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es steht unentschieden zwischen den beiden Mannschaften."
+    },
+    {
+      "lemma": "folgenden",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Mehr Informationen auf den folgenden Seiten."
+    },
+    {
+      "lemma": "im Freien",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wir wollen heute im Freien übernachten."
+    },
+    {
+      "lemma": "sich freuen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es freut mich, dass alles so gut geklappt hat."
+    },
+    {
+      "lemma": "gegen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich bin gegen einen Baum gefahren."
+    },
+    {
+      "lemma": "gelingen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es ist mir gelungen, meinen Chef zu überzeugen."
+    },
+    {
+      "lemma": "heißen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wie heißen Sie?"
+    },
+    {
+      "lemma": "hinten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wo möchtest du sitzen? Hinten oder vorne?"
+    },
+    {
+      "lemma": "inzwischen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Herr Müller kommt gleich zurück. Sie können inzwischen in seinem Büro warten."
+    },
+    {
+      "lemma": "irgendwann",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich habe Sie irgendwann schon mal gesehen."
+    },
+    {
+      "lemma": "kaputtgehen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Pass bitte mit diesem Glas auf. Es geht leicht kaputt."
+    },
+    {
+      "lemma": "kaputtmachen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wer hat die Lampe kaputtgemacht?"
+    },
+    {
+      "lemma": "klagen, klagt, klagte, hat geklagt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Sie klagt über Kopfschmerzen."
+    },
+    {
+      "lemma": "klappen, klappt, klappte, hat geklappt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Wie war die Reise? – Gut. Es hat alles prima geklappt."
+    },
+    {
+      "lemma": "klingeln, klingelt, klingelte, hat geklingelt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich glaube, es hat an der Tür geklingelt."
+    },
+    {
+      "lemma": "klingen, klingt, klang, hat geklungen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wollen wir einkaufen gehen und danach zusammen kochen? – Ja, das klingt gut."
+    },
+    {
+      "lemma": "klopfen, klopft, klopfte, hat geklopft",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Da klopft jemand ans Fenster."
+    },
+    {
+      "lemma": "klären, klärt, klärte, hat geklärt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich hoffe, wir können dieses Problem bald klären."
+    },
+    {
+      "lemma": "kleben, klebt, klebte, hat geklebt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Die Briefmarke klebt nicht mehr."
+    },
+    {
+      "lemma": "meist-, die meisten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wie gut kannst du Deutsch? – Das Meiste verstehe ich."
+    },
+    {
+      "lemma": "nein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Noch ein Bier? – Nein, danke."
+    },
+    {
+      "lemma": "rein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Der Pullover ist aus reiner Wolle."
+    },
+    {
+      "lemma": "schon",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ist das Essen schon fertig?"
+    },
+    {
+      "lemma": "schön",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich finde eure Wohnung sehr schön."
+    },
+    {
+      "lemma": "selten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich gehe ganz selten ins Kino."
+    },
+    {
+      "lemma": "sondern",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Unser Besuch kommt nicht heute, sondern morgen."
+    },
+    {
+      "lemma": "stehen bleiben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Bitte bleiben Sie stehen."
+    },
+    {
+      "lemma": "übermorgen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Morgen kann ich nicht. Wir sehen uns übermorgen."
+    },
+    {
+      "lemma": "vorgestern",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Er hat mich vorgestern angerufen."
+    },
+    {
+      "lemma": "vorhin",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Vorhin hat Heidrun angerufen. Du sollst sie zurückrufen."
+    },
+    {
+      "lemma": "wann",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wann kommst du?"
+    }
+  ]
+}

@@ -70,6 +70,10 @@ export function parseTsv(level: Level, text: string): RawEntry[] {
     const example_en = cols[2]?.trim() || undefined;
 
     const parsed = parseCol1(col1);
+    // Some rows are bare polysemy continuations like `(2)` — after stripping
+    // the marker, the lemma is empty. These rows have no headword and would
+    // produce an empty slug downstream; drop them.
+    if (parsed.lemma === "") continue;
     const key = parsed.lemma;
     const existing = groups.get(key);
     if (!existing) {
