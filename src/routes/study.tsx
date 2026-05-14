@@ -58,7 +58,7 @@ export function StudyRoute() {
   const pct = Math.round(mastery * 100);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)]">
+    <div className="flex flex-col h-[calc(100dvh-64px)]">
       <header className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
         <Link to="/decks" className="text-neutral-400">←</Link>
         <div className="text-sm font-semibold">{deck.name}</div>
