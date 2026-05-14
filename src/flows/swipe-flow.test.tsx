@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SwipeFlow } from "./swipe-flow";
 import { db } from "@/db/dexie";
@@ -23,13 +23,14 @@ afterEach(() => {
 
 describe("SwipeFlow", () => {
   it("renders the lemma and reveals on click", async () => {
+    const user = userEvent.setup();
     render(<SwipeFlow deck={deck} onExit={() => {}} />);
     await waitFor(() => expect(screen.getByText("Hund")).toBeInTheDocument());
     expect(screen.queryByText("dog")).not.toBeInTheDocument();
-    fireEvent.click(screen.getByText("Hund"));
-    // The card front is `<div role="button">` (not a real button) so React's
-    // event handler runs but the state-driven re-render may not be flushed
-    // synchronously in every test env. Wait for the reveal instead of asserting.
+    // userEvent dispatches a realistic pointerdown→pointerup→click sequence
+    // and lets pending React updates flush; fireEvent races React 18's batched
+    // renders in CI and intermittently misses the post-state DOM.
+    await user.click(screen.getByText("Hund"));
     await waitFor(() => expect(screen.getByText("dog")).toBeInTheDocument());
   });
 
@@ -57,6 +58,7 @@ describe("SwipeFlow", () => {
   });
 
   it("renders without crashing under prefers-reduced-motion", async () => {
+    const user = userEvent.setup();
     vi.stubGlobal("matchMedia", (q: string) => ({
       matches: q === "(prefers-reduced-motion: reduce)",
       media: q, addEventListener: vi.fn(), removeEventListener: vi.fn(),
@@ -64,8 +66,8 @@ describe("SwipeFlow", () => {
     }));
     render(<SwipeFlow deck={deck} onExit={() => {}} />);
     await waitFor(() => expect(screen.getByText("Hund")).toBeInTheDocument());
-    fireEvent.click(screen.getByText("Hund"));
-    expect(screen.getByText("dog")).toBeInTheDocument();
+    await user.click(screen.getByText("Hund"));
+    await waitFor(() => expect(screen.getByText("dog")).toBeInTheDocument());
     vi.unstubAllGlobals();
   });
 });
