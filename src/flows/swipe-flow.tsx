@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { animate, motion, useMotionValue, useTransform } from "motion/react";
 import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
@@ -51,15 +51,21 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
   const hitOpacity = useTransform(dragX, [40, 120], [0, 1]);
   const missOpacity = useTransform(dragX, [-120, -40], [1, 0]);
 
+  // Reset the drag motion value SYNCHRONOUSLY (before paint) when the card
+  // swaps. Otherwise the new motion.div mounts with style.x bound to a dragX
+  // that's still off-screen from the previous fly-out, and the new card paints
+  // off-screen for a frame — sometimes never recovering.
+  useLayoutEffect(() => {
+    dragX.set(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current?.id]);
+
   useEffect(() => {
     setRevealed(false);
     setExiting(null);
-    dragX.set(0);
     if (current) {
       getStats(deck.id, current.id).then((s) => setMissCount((s?.attempts ?? 0) - (s?.successes ?? 0)));
     }
-    // dragX is a stable motion value; effect depends on the word change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, deck.id]);
 
   async function handleResult(success: boolean) {
@@ -112,7 +118,7 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
             else if (dx < -SWIPE_THRESHOLD_PX || vx < -SWIPE_VELOCITY) handleResult(false);
             else animate(dragX, 0, { type: "spring", stiffness: 400, damping: 35 });
           }}
-          initial={{ scale: 0.95, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0, x: 0 }}
           animate={{ scale: 1, opacity: 1, rotateY: revealed ? 180 : 0 }}
           transition={anim.springSoft}
         >
