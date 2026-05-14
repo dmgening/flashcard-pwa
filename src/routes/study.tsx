@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { loadDeck } from "@/lib/deck-loader";
@@ -21,6 +21,29 @@ export function StudyRoute() {
   const [flow, setFlow] = useState<FlowKind | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { done, missed, resetSession } = useSessionStore();
+
+  // Lock document scroll/overscroll while on the study route so vertical
+  // swipe gestures don't trigger rubber-band or pull-to-refresh.
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const prev = {
+      htmlOverflow: html.style.overflow,
+      bodyOverflow: body.style.overflow,
+      htmlOverscroll: html.style.overscrollBehavior,
+      bodyOverscroll: body.style.overscrollBehavior,
+    };
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
+    body.style.overscrollBehavior = "none";
+    return () => {
+      html.style.overflow = prev.htmlOverflow;
+      body.style.overflow = prev.bodyOverflow;
+      html.style.overscrollBehavior = prev.htmlOverscroll;
+      body.style.overscrollBehavior = prev.bodyOverscroll;
+    };
+  }, []);
 
   useEffect(() => {
     if (!deckId) return;
