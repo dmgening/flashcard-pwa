@@ -31,4 +31,8 @@ describe("assignUniqueIds", () => {
     const ids = assignUniqueIds(["hund", "hund", "hund"], "de-a1");
     expect(ids).toEqual(["de-a1-hund", "de-a1-hund-2", "de-a1-hund-3"]);
   });
+
+  it("throws on an empty slug to surface bad source data", () => {
+    expect(() => assignUniqueIds(["hund", "", "katze"], "de-a1")).toThrow(/empty slug at index 1/);
+  });
 });

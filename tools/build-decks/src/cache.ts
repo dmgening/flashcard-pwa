@@ -35,10 +35,16 @@ export class FileCache {
 
   async set(key: string, value: unknown): Promise<void> {
     const file = this.pathFor(key);
+    const tmp = `${file}.tmp`;
     try {
       await fs.mkdir(path.dirname(file), { recursive: true });
-      await fs.writeFile(file, JSON.stringify(value));
+      // Write to a sibling temp file and rename into place so a kill mid-write
+      // can't leave a corrupt JSON file that breaks get() forever.
+      await fs.writeFile(tmp, JSON.stringify(value));
+      await fs.rename(tmp, file);
     } catch (err) {
+      // Best-effort cleanup of the temp file if it was created.
+      await fs.unlink(tmp).catch(() => {});
       // Cache write failures should never break a build — log and continue.
       console.warn(`[cache] write failed for ${key}: ${(err as Error).message}`);
     }

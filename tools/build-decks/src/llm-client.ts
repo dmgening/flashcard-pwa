@@ -37,7 +37,20 @@ export class OpenAiCompatibleClient implements LlmClient {
       response_format: { type: "json_object" },
       temperature: 0,
     });
-    const content = res.choices[0]?.message?.content ?? "";
+    const choice = res.choices[0];
+    if (!choice) {
+      throw new Error("LLM returned no choices");
+    }
+    if (choice.finish_reason && choice.finish_reason !== "stop") {
+      // length / content_filter / tool_calls all imply the JSON we asked for is
+      // either truncated or absent. Fail fast so the enrich retry path can
+      // surface a clean drop instead of a downstream JSON.parse error.
+      throw new Error(`LLM stopped with finish_reason=${choice.finish_reason}`);
+    }
+    const content = choice.message?.content;
+    if (!content) {
+      throw new Error("LLM returned empty content");
+    }
     return { content };
   }
 }
