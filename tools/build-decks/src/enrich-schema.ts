@@ -2,7 +2,7 @@
 import { z } from "zod";
 
 export const enrichedFieldsSchema = z.object({
-  en: z.array(z.string().min(1)).min(1).max(5),
+  en: z.array(z.string().min(1)).min(1).max(3),
   aux: z.enum(["haben", "sein"]).optional(),
   partizip: z.string().min(1).optional(),
   example: z.string().min(1).optional(),

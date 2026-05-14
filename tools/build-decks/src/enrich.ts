@@ -71,8 +71,14 @@ export async function enrich(
     promptVersion: PROMPT_VERSION,
   });
   if (!options.bypassRead) {
-    const cached = (await cache.get(key)) as EnrichedFields | undefined;
-    if (cached) return cached;
+    const cached = await cache.get(key);
+    if (cached !== undefined) {
+      // Re-validate against the current schema so a hand-edited or
+      // schema-drifted cache file falls through to the LLM instead of
+      // smuggling bad data into the build.
+      const reparsed = enrichedFieldsSchema.safeParse(cached);
+      if (reparsed.success) return reparsed.data;
+    }
   }
 
   let result = await attempt(entry, client);

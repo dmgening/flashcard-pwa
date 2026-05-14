@@ -48,6 +48,14 @@ describe("parseTsv", () => {
     expect(e.example_de).toBe("Wie alt sind Sie?"); // lowest-numbered wins
   });
 
+  it("lowest-numbered sense wins even when source lists them out of order", () => {
+    const ooo = "alt(2)\tMein Auto ist alt.\tMy car is old.\nalt(1)\tWie alt sind Sie?\tHow old are you?\n";
+    const e = parseTsv("A1", ooo);
+    const alt = e.find((x) => x.lemma === "alt")!;
+    expect(alt.senses).toBe(2);
+    expect(alt.example_de).toBe("Wie alt sind Sie?");
+  });
+
   it("classifies remaining lemmas as 'other'", () => {
     const e = entries.find((x) => x.lemma === "und")!;
     expect(e.pos).toBe("other");
