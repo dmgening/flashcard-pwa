@@ -52,10 +52,10 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
   const missOpacity = useTransform(dragX, [-120, -40], [1, 0]);
 
   // Reset the drag motion value SYNCHRONOUSLY (before paint) when the card
-  // swaps. Otherwise the new motion.div mounts with style.x bound to a dragX
-  // that's still off-screen from the previous fly-out, and the new card paints
-  // off-screen for a frame — sometimes never recovering.
+  // swaps. Must stop any in-flight animation first — `set()` alone is
+  // overridden by the next animation frame in motion v12.
   useLayoutEffect(() => {
+    dragX.stop();
     dragX.set(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current?.id]);
@@ -130,14 +130,16 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
                 missed {missCount}×
               </span>
             )}
-            <button
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => setRevealed(true)}
-              className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 select-none"
+              className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 select-none cursor-pointer"
             >
               <WordHead word={current} />
               <MetaLine word={current} />
               <div className="absolute bottom-4 text-[10px] uppercase tracking-widest text-neutral-600">tap to reveal</div>
-            </button>
+            </div>
 
             {/* Drag hint stamps — opacity driven by dragX */}
             <motion.div
@@ -152,9 +154,11 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
 
           {revealed && (
             <CardFace>
-              <button
+              <div
+                role="button"
+                tabIndex={0}
                 onClick={() => setRevealed(false)}
-                className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 select-none"
+                className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 select-none cursor-pointer"
               >
                 <div className="text-3xl font-semibold text-neutral-100">{current.en.join(", ")}</div>
                 {current.example && (
@@ -168,7 +172,7 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
                     onClick={(e) => { e.stopPropagation(); speak(current.lemma, ttsVoiceURI); }}
                     className="mt-5 text-xl opacity-50">🔊</button>
                 )}
-              </button>
+              </div>
             </CardFace>
           )}
         </motion.div>
