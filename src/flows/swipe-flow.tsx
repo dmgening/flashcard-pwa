@@ -106,7 +106,12 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
         {revealed && (
           <>
             <div className="text-lg text-neutral-100 mt-4">{current.en.join(", ")}</div>
-            {current.example && <div className="text-xs italic text-neutral-500 mt-3 max-w-[90%]">{current.example}</div>}
+            {current.example && (
+              <div className="text-xs italic text-neutral-500 mt-3 max-w-[90%]">{current.example}</div>
+            )}
+            {current.exampleEn && (
+              <div className="text-xs text-neutral-600 mt-1 max-w-[90%]">{current.exampleEn}</div>
+            )}
           </>
         )}
 

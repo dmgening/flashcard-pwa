@@ -11,5 +11,8 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
     globals: true,
+    // The build-decks workspace has its own vitest config with a different
+    // alias setup (@app → src). Run it via `npm test -w @flashcard-pwa/build-decks`.
+    exclude: ["**/node_modules/**", "**/dist/**", "tools/**"],
   },
 });

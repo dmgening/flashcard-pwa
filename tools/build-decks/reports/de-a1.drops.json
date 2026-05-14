@@ -1,0 +1,32 @@
+{
+  "level": "A1",
+  "source": 680,
+  "built": 674,
+  "dropped": 4,
+  "drops": [
+    {
+      "lemma": "(sich) vorstellen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wir wollen uns kennenlernen."
+    },
+    {
+      "lemma": "wann",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wann bist du fertig?"
+    },
+    {
+      "lemma": "was für ein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Was für eine Farbe möchten Sie?"
+    },
+    {
+      "lemma": "werden",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Mein Sohn will Arzt werden."
+    }
+  ]
+}

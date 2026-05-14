@@ -9,6 +9,7 @@ const wordBase = z.object({
   lemma: z.string().min(1),
   en: z.array(z.string().min(1)).min(1),
   example: z.string().optional(),
+  exampleEn: z.string().optional(),
 });
 
 export const wordSchema = z.discriminatedUnion("pos", [

@@ -1,6 +1,6 @@
 import { deckSchema, type Deck } from "./schema";
 
-export const AVAILABLE_DECKS = ["de-a1"] as const;
+export const AVAILABLE_DECKS = ["de-a1", "de-a2", "de-b1"] as const;
 export type DeckId = (typeof AVAILABLE_DECKS)[number];
 
 export async function loadDeck(id: DeckId): Promise<Deck> {
