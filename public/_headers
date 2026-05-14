@@ -1,0 +1,22 @@
+# Service worker, registration shim, app shell, and manifest must revalidate
+# every visit so a new deploy is picked up promptly. Offline use is unaffected:
+# the registered SW serves these from its precache when there's no network.
+/sw.js
+  Cache-Control: no-cache
+/registerSW.js
+  Cache-Control: no-cache
+/workbox-*.js
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
+
+# Deck JSONs have no hash in their filenames but are rebuilt independently of
+# the bundle. Revalidate so updates land, SW precache still handles offline.
+/decks/*
+  Cache-Control: no-cache
+
+# Hashed bundle assets — content-addressed, safe to lock forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
