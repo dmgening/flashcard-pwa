@@ -27,7 +27,10 @@ describe("SwipeFlow", () => {
     await waitFor(() => expect(screen.getByText("Hund")).toBeInTheDocument());
     expect(screen.queryByText("dog")).not.toBeInTheDocument();
     fireEvent.click(screen.getByText("Hund"));
-    expect(screen.getByText("dog")).toBeInTheDocument();
+    // The card front is `<div role="button">` (not a real button) so React's
+    // event handler runs but the state-driven re-render may not be flushed
+    // synchronously in every test env. Wait for the reveal instead of asserting.
+    await waitFor(() => expect(screen.getByText("dog")).toBeInTheDocument());
   });
 
   it("Got it button records a success", async () => {
