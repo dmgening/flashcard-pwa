@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
 import { diffTokens, isExactMatch } from "@/lib/diff";
+import { useAnim } from "@/lib/transitions";
 
 function expectedAnswer(word: Word): string {
   if (word.pos === "noun") return `${word.article} ${word.lemma}`;
@@ -10,6 +12,7 @@ function expectedAnswer(word: Word): string {
 
 export function TypeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
   const { current, onResult } = useStudySession(deck);
+  const anim = useAnim();
   const [input, setInput] = useState("");
   const [submitted, setSubmitted] = useState<null | { correct: boolean; expected: string; userInput: string }>(null);
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -60,20 +63,31 @@ export function TypeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
 
       <div className="text-center mb-6">
         <div className="inline-block text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-400">{current.pos}</div>
-        <div className="text-3xl font-semibold mt-3">{current.en[0]}</div>
+        <motion.div
+          className="text-3xl font-semibold mt-3"
+          animate={submitted?.correct && !anim.reduced ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {current.en[0]}
+        </motion.div>
         <div className="text-xs text-neutral-500 mt-1">type in German{current.pos === "noun" ? " (article + word)" : ""}</div>
       </div>
 
-      <input
-        autoFocus
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={onKey}
-        disabled={submitted?.correct === true}
-        placeholder={placeholder}
-        className={`w-full rounded-xl border px-4 py-3 text-lg bg-neutral-900 text-neutral-100 ${submitted && !submitted.correct ? "border-rose-700" : "border-neutral-800"}`}
-      />
+      <motion.div
+        animate={submitted && !submitted.correct && !anim.reduced ? { x: [0, -8, 8, -6, 6, 0] } : { x: 0 }}
+        transition={{ duration: 0.28 }}
+      >
+        <input
+          autoFocus
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={onKey}
+          disabled={submitted?.correct === true}
+          placeholder={placeholder}
+          className={`w-full rounded-xl border px-4 py-3 text-lg bg-neutral-900 text-neutral-100 ${submitted && !submitted.correct ? "border-rose-700" : "border-neutral-800"}`}
+        />
+      </motion.div>
 
       <button onClick={submit} className="w-full mt-3 rounded-xl py-3 bg-sky-500 text-neutral-950 font-semibold">
         {submitted ? (submitted.correct ? "✓ Continue" : "Continue") : "Check"}
