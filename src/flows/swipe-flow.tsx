@@ -133,11 +133,19 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
             <div
               role="button"
               tabIndex={0}
-              onClick={() => setRevealed(true)}
+              onClick={() => { if (!revealed) setRevealed(true); }}
+              // Hidden face must not capture clicks meant for the visible back —
+              // otherwise a tap that should un-flip just re-fires "reveal".
+              style={{ pointerEvents: revealed ? "none" : "auto" }}
               className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 select-none cursor-pointer"
             >
               <WordHead word={current} />
               <MetaLine word={current} />
+              {ttsAvailable() && soundOn && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); speak(current.lemma, ttsVoiceURI); }}
+                  className="mt-5 text-xl opacity-50">🔊</button>
+              )}
               <div className="absolute bottom-4 text-[10px] uppercase tracking-widest text-neutral-600">tap to reveal</div>
             </div>
 
@@ -167,12 +175,18 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
                 {current.exampleEn && (
                   <div className="text-xs text-neutral-500 mt-1 max-w-[90%]">{current.exampleEn}</div>
                 )}
-                {ttsAvailable() && soundOn && (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); speak(current.lemma, ttsVoiceURI); }}
-                    className="mt-5 text-xl opacity-50">🔊</button>
-                )}
               </div>
+
+              {/* Mirror the drag tint on the back face so the green/red wash
+                  shows up whether the card is flipped or not. */}
+              <motion.div
+                style={{ opacity: hitOpacity }}
+                className="pointer-events-none absolute inset-0 bg-emerald-800/80 rounded-2xl"
+              />
+              <motion.div
+                style={{ opacity: missOpacity }}
+                className="pointer-events-none absolute inset-0 bg-rose-800/80 rounded-2xl"
+              />
             </CardFace>
           )}
         </motion.div>

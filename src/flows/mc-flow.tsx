@@ -72,21 +72,23 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
     <div className="h-full flex flex-col p-4">
       <button onClick={onExit} className="self-start text-xs text-neutral-500 mb-3">← back to flows</button>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={current.id}
-          className="text-center mb-5"
-          initial={{ y: 24, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -24, opacity: 0 }}
-          transition={anim.fade}
-        >
-          <PromptWord word={current} />
-          {ttsAvailable() && soundOn && (
-            <button onClick={() => speak(current.lemma, ttsVoiceURI)} className="text-lg opacity-50 mt-2">🔊</button>
-          )}
-        </motion.div>
-      </AnimatePresence>
+      <div className="flex-1 flex items-center justify-center min-h-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current.id}
+            className="text-center"
+            initial={{ y: 24, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -24, opacity: 0 }}
+            transition={anim.fade}
+          >
+            <PromptWord word={current} />
+            {ttsAvailable() && soundOn && (
+              <button onClick={() => speak(current.lemma, ttsVoiceURI)} className="text-lg opacity-50 mt-2">🔊</button>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       <div className="space-y-2">
         {choices.map((c) => {
