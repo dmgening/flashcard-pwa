@@ -1,22 +1,39 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { motion } from "motion/react";
+import { Layers, BookOpen, BarChart3 } from "lucide-react";
+import { useAnim } from "@/lib/transitions";
 
-const tab = "flex-1 py-3 text-center text-xs uppercase tracking-wide";
+type Tab = { to: string; label: string; Icon: typeof Layers; matchPrefix: string };
+const TABS: Tab[] = [
+  { to: "/decks", label: "Decks", Icon: BookOpen, matchPrefix: "/decks" },
+  { to: "/study", label: "Study", Icon: Layers, matchPrefix: "/study" },
+  { to: "/stats", label: "Stats", Icon: BarChart3, matchPrefix: "/stats" },
+];
 
 export function TabBar() {
+  const { pathname } = useLocation();
+  const anim = useAnim();
+
   return (
     <nav className="flex border-t border-neutral-800 bg-neutral-950 fixed bottom-0 inset-x-0">
-      <NavLink to="/decks" className={({ isActive }) =>
-        `${tab} ${isActive ? "text-neutral-100 border-t-2 border-sky-400 -mt-px" : "text-neutral-500"}`}>
-        Decks
-      </NavLink>
-      <NavLink to="/study" className={({ isActive }) =>
-        `${tab} ${isActive ? "text-neutral-100 border-t-2 border-sky-400 -mt-px" : "text-neutral-500"}`}>
-        Study
-      </NavLink>
-      <NavLink to="/stats" className={({ isActive }) =>
-        `${tab} ${isActive ? "text-neutral-100 border-t-2 border-sky-400 -mt-px" : "text-neutral-500"}`}>
-        Stats
-      </NavLink>
+      {TABS.map(({ to, label, Icon, matchPrefix }) => {
+        const isActive = pathname.startsWith(matchPrefix);
+        return (
+          <NavLink key={to} to={to} className="relative flex-1 py-2 flex flex-col items-center justify-center">
+            <span className={`relative z-10 flex flex-col items-center gap-0.5 ${isActive ? "text-neutral-100" : "text-neutral-500"}`}>
+              <Icon size={20} strokeWidth={2} />
+              <span className="text-[10px] uppercase tracking-wide">{label}</span>
+            </span>
+            {isActive && (
+              <motion.span
+                layoutId="tab-indicator"
+                className="absolute inset-x-3 top-0 h-0.5 bg-sky-400 rounded-full"
+                transition={anim.springSnappy}
+              />
+            )}
+          </NavLink>
+        );
+      })}
     </nav>
   );
 }
