@@ -1,0 +1,43 @@
+// tools/build-decks/src/llm-client.ts
+import OpenAI from "openai";
+import "dotenv/config";
+
+export type LlmRequest = {
+  prompt: string;
+};
+
+export type LlmResponse = {
+  content: string;
+};
+
+export interface LlmClient {
+  complete(req: LlmRequest): Promise<LlmResponse>;
+}
+
+export class OpenAiCompatibleClient implements LlmClient {
+  private client: OpenAI;
+  private model: string;
+
+  constructor(opts?: { apiKey?: string; baseURL?: string; model?: string }) {
+    const apiKey = opts?.apiKey ?? process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new Error("OPENAI_API_KEY is not set. Put it in .env or pass to the constructor.");
+    }
+    this.client = new OpenAI({
+      apiKey,
+      baseURL: opts?.baseURL ?? process.env.OPENAI_BASE_URL ?? "https://llm.chutes.ai/v1",
+    });
+    this.model = opts?.model ?? process.env.MODEL ?? "deepseek-ai/DeepSeek-V3";
+  }
+
+  async complete(req: LlmRequest): Promise<LlmResponse> {
+    const res = await this.client.chat.completions.create({
+      model: this.model,
+      messages: [{ role: "user", content: req.prompt }],
+      response_format: { type: "json_object" },
+      temperature: 0,
+    });
+    const content = res.choices[0]?.message?.content ?? "";
+    return { content };
+  }
+}
