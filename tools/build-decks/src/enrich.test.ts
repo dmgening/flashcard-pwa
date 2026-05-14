@@ -129,13 +129,29 @@ describe("enrichBatch", () => {
     warn.mockRestore();
   });
 
-  it("rejects a batch whose envelope doesn't match batchResponseSchema", async () => {
+  it("rejects a batch whose envelope is the wrong shape", async () => {
     const { client } = mockClient([JSON.stringify({ wrong: "shape" })]);
     const cache = new FileCache(tmp);
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     const out = await enrichBatch([noun("Hund")], client, cache);
     expect(out.get("Hund")).toBeNull();
     warn.mockRestore();
+  });
+
+  it("keeps valid items in a partly-bad batch (per-item validation)", async () => {
+    // Three items in the batch: one good, one with an invalid aux value
+    // (LLM hallucination), one with an out-of-range idx.
+    const { client } = mockClient([JSON.stringify({
+      results: [
+        { idx: 0, en: ["dog"] },
+        { idx: 1, en: ["to bogus"], aux: "sich", partizip: "x" },
+        { idx: 9, en: ["bogus"] },
+      ],
+    })]);
+    const cache = new FileCache(tmp);
+    const out = await enrichBatch([noun("Hund"), verb("vorstellen")], client, cache);
+    expect(out.get("Hund")?.en).toEqual(["dog"]);
+    expect(out.get("vorstellen")).toBeNull();
   });
 
   it("ignores idx values outside the batch range", async () => {

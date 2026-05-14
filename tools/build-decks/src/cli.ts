@@ -10,6 +10,7 @@ type Args = {
   levels: Level[];
   dryRun: boolean;
   noCache: boolean;
+  concurrency?: number;
 };
 
 function parseArgs(argv: string[]): Args {
@@ -27,8 +28,14 @@ function parseArgs(argv: string[]): Args {
       out.dryRun = true;
     } else if (a === "--no-cache") {
       out.noCache = true;
+    } else if (a === "--concurrency") {
+      const n = Number(argv[++i]);
+      if (!Number.isInteger(n) || n < 1) {
+        throw new Error(`--concurrency requires a positive integer (got ${argv[i]})`);
+      }
+      out.concurrency = n;
     } else if (a === "--help" || a === "-h") {
-      console.log("Usage: build:decks [--level a1|a2|b1|all] [--dry-run] [--no-cache]");
+      console.log("Usage: build:decks [--level a1|a2|b1|all] [--dry-run] [--no-cache] [--concurrency N]");
       process.exit(0);
     } else {
       throw new Error(`Unknown flag: ${a}`);
@@ -45,7 +52,14 @@ async function main() {
   const cacheDir = path.join(here, "..", "cache");
 
   for (const level of args.levels) {
-    await buildDeck({ level, outputDir, cacheDir, dryRun: args.dryRun, noCache: args.noCache });
+    await buildDeck({
+      level,
+      outputDir,
+      cacheDir,
+      dryRun: args.dryRun,
+      noCache: args.noCache,
+      concurrency: args.concurrency,
+    });
   }
 }
 

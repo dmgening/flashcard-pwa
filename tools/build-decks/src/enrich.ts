@@ -3,11 +3,18 @@ import pLimit from "p-limit";
 import type { RawEntry } from "./sources/types";
 import type { LlmClient } from "./llm-client";
 import { FileCache, cacheKey } from "./cache";
+import { z } from "zod";
 import {
-  batchResponseSchema,
+  batchItemSchema,
   enrichedFieldsSchema,
   type EnrichedFields,
 } from "./enrich-schema";
+
+// Loose envelope: just check the top-level shape so per-item validation
+// can isolate bad items without nuking the whole batch.
+const looseBatchEnvelope = z.object({
+  results: z.array(z.unknown()),
+});
 
 // Bumped to 2 when we switched from per-word calls to batched calls. The
 // prompt shape changed materially, so any old cache entries should not
@@ -89,17 +96,20 @@ async function attemptBatch(
   } catch {
     return null;
   }
-  const parsed = batchResponseSchema.safeParse(raw);
-  if (!parsed.success) return null;
+  const envelope = looseBatchEnvelope.safeParse(raw);
+  if (!envelope.success) return null;
 
   const byIdx = new Map<number, EnrichedFields>();
-  for (const item of parsed.data.results) {
-    if (item.idx < 0 || item.idx >= batch.length) continue;
-    const entry = batch[item.idx];
-    // For verbs we need aux + partizip — drop items missing them so the
-    // assemble step doesn't have to defensively re-check.
-    if (entry.pos === "verb" && (!item.aux || !item.partizip)) continue;
-    byIdx.set(item.idx, stripIdx(item));
+  for (const candidate of envelope.data.results) {
+    // Validate each item independently — a single bad item shouldn't drop
+    // the whole batch. Common cause: LLM puts something invalid in `aux`
+    // (e.g. "sich" or "werden") for one verb out of 25.
+    const item = batchItemSchema.safeParse(candidate);
+    if (!item.success) continue;
+    if (item.data.idx < 0 || item.data.idx >= batch.length) continue;
+    const entry = batch[item.data.idx];
+    if (entry.pos === "verb" && (!item.data.aux || !item.data.partizip)) continue;
+    byIdx.set(item.data.idx, stripIdx(item.data));
   }
   return byIdx;
 }
