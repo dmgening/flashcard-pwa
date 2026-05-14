@@ -64,10 +64,13 @@ export function StatsRoute() {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={anim.reduced ? { duration: 0 } : { duration: 0.25, delay: i * 0.04 }}
-                  className="flex justify-between border-b border-neutral-900 py-1.5"
+                  className="flex justify-between gap-3 border-b border-neutral-900 py-1.5"
                 >
-                  <span className="text-neutral-200">{w.pos === "noun" ? `${w.article} ${w.lemma}` : w.lemma}</span>
-                  <span className="text-xs text-neutral-500">{r.successes}/{r.attempts} · {rate}%</span>
+                  <span className="text-neutral-200 truncate">
+                    {w.pos === "noun" ? `${w.article} ${w.lemma}` : w.lemma}
+                    <span className="text-neutral-500 italic ml-2 text-sm">{w.en.join(", ")}</span>
+                  </span>
+                  <span className="text-xs text-neutral-500 whitespace-nowrap">{r.successes}/{r.attempts} · {rate}%</span>
                 </motion.li>
               );
             })}

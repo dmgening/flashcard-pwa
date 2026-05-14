@@ -4,9 +4,11 @@ import { ChevronDown } from "lucide-react";
 import { loadDeck } from "@/lib/deck-loader";
 import type { Deck } from "@/lib/schema";
 import { getStatsForDeck } from "@/db/stats";
-import { computeMastery } from "@/lib/mastery";
+import { computeDeckBreakdown, type DeckBreakdown } from "@/lib/mastery";
 import { useSessionStore } from "@/store/session-store";
 import { DeckLoadingSkeleton } from "@/components/skeleton";
+import { MasteryBar } from "@/components/mastery-bar";
+import { MasterySummary } from "@/components/mastery-summary";
 import { SwipeFlow } from "@/flows/swipe-flow";
 import { McFlow } from "@/flows/mc-flow";
 import { TypeFlow } from "@/flows/type-flow";
@@ -17,7 +19,7 @@ type FlowKind = "swipe" | "mc" | "type";
 export function StudyRoute() {
   const { deckId } = useParams<{ deckId: string }>();
   const [deck, setDeck] = useState<Deck | null>(null);
-  const [mastery, setMastery] = useState(0);
+  const [breakdown, setBreakdown] = useState<DeckBreakdown>({ mastered: 0, seen: 0, missed: 0, untouched: 0 });
   const [flow, setFlow] = useState<FlowKind | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { done, missed, resetSession } = useSessionStore();
@@ -52,15 +54,12 @@ export function StudyRoute() {
     setFlow(null);
     setDeck(null);
     setError(null);
-    setMastery(0);
+    setBreakdown({ mastered: 0, seen: 0, missed: 0, untouched: 0 });
     (async () => {
       try {
         const d = await loadDeck(deckId as DeckId);
         if (cancelled) return;
-        const stats = await getStatsForDeck(deckId);
-        if (cancelled) return;
         setDeck(d);
-        setMastery(computeMastery(d.words.length, stats));
       } catch (e) {
         if (cancelled) return;
         setError(e instanceof Error ? e.message : String(e));
@@ -69,6 +68,19 @@ export function StudyRoute() {
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckId]);
+
+  // Recompute the deck breakdown after every recorded attempt so the header
+  // counts and progress bar reflect hits/misses live. `done` bumps in the
+  // session store after recordAttempt has flushed to IndexedDB.
+  useEffect(() => {
+    if (!deck || !deckId) return;
+    let cancelled = false;
+    getStatsForDeck(deckId).then((stats) => {
+      if (cancelled) return;
+      setBreakdown(computeDeckBreakdown(deck.words.length, stats));
+    });
+    return () => { cancelled = true; };
+  }, [deck, deckId, done]);
 
   if (error) {
     return <div className="p-4 text-red-400">{error} <Link to="/decks" className="underline">Back</Link></div>;
@@ -80,8 +92,6 @@ export function StudyRoute() {
     return <div className="p-4 text-neutral-400">This deck has no words.</div>;
   }
 
-  const pct = Math.round(mastery * 100);
-
   return (
     <div className="flex flex-col h-[calc(100dvh-64px)]">
       <header className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
@@ -92,11 +102,9 @@ export function StudyRoute() {
           {deck.name}
           <ChevronDown size={14} className="text-neutral-500" />
         </Link>
-        <div className="text-xs text-neutral-400">{pct}%</div>
+        <MasterySummary breakdown={breakdown} />
       </header>
-      <div className="h-[3px] bg-neutral-900">
-        <div className="h-full bg-sky-400" style={{ width: `${pct}%` }} />
-      </div>
+      <MasteryBar breakdown={breakdown} total={deck.words.length} className="h-[3px]" />
 
       <div className="flex-1 overflow-hidden">
         {flow === null && (
