@@ -58,6 +58,32 @@ describe("assembleWord", () => {
     expect(w.example).toBe("SOURCE");
   });
 
+  it("passes the source example_en through as exampleEn when paired", () => {
+    const raw: RawEntry = {
+      level: "A1", raw: "der Hund", lemma: "Hund", pos: "noun",
+      article: "der", plural: "Hunde",
+      example_de: "Der Hund bellt.", example_en: "The dog barks.",
+      senses: 1,
+    };
+    const w = assembleWord("de-a1-hund", raw, { en: ["dog"] });
+    expect(w.example).toBe("Der Hund bellt.");
+    expect((w as { exampleEn?: string }).exampleEn).toBe("The dog barks.");
+  });
+
+  it("does not surface exampleEn when the example came from the LLM (would be mismatched)", () => {
+    const raw: RawEntry = {
+      level: "A1", raw: "gehen", lemma: "gehen", pos: "verb",
+      example_en: "Stale english.",  // source lacked example_de
+      senses: 1,
+    };
+    const w = assembleWord("de-a1-gehen", raw, {
+      en: ["to go"], aux: "sein", partizip: "gegangen",
+      example: "LLM example.",
+    });
+    expect(w.example).toBe("LLM example.");
+    expect((w as { exampleEn?: string }).exampleEn).toBeUndefined();
+  });
+
   it("throws separately on missing aux vs missing partizip, naming the lemma", () => {
     const raw: RawEntry = { level: "A1", raw: "gehen", lemma: "gehen", pos: "verb", senses: 1 };
     expect(() => assembleWord("de-a1-gehen", raw, { en: ["to go"] })).toThrow(/gehen.*aux/);

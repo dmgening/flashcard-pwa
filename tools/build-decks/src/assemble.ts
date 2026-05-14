@@ -5,6 +5,14 @@ import type { EnrichedFields } from "./enrich-schema";
 
 export function assembleWord(id: string, raw: RawEntry, enriched: EnrichedFields): Word {
   const example = raw.example_de ?? enriched.example;
+  // exampleEn only comes from the source — the LLM call doesn't ask for one,
+  // and pairing example.de with example.en preserves the source-language
+  // alignment that makes the reveal UI useful.
+  const exampleEn = example && example === raw.example_de ? raw.example_en : undefined;
+  const exampleFields = {
+    ...(example ? { example } : {}),
+    ...(exampleEn ? { exampleEn } : {}),
+  };
 
   if (raw.pos === "noun") {
     if (!raw.article) {
@@ -17,7 +25,7 @@ export function assembleWord(id: string, raw: RawEntry, enriched: EnrichedFields
       article: raw.article,
       plural: raw.plural ?? null,
       en: enriched.en,
-      ...(example ? { example } : {}),
+      ...exampleFields,
     };
   }
 
@@ -35,7 +43,7 @@ export function assembleWord(id: string, raw: RawEntry, enriched: EnrichedFields
       aux: enriched.aux,
       partizip: enriched.partizip,
       en: enriched.en,
-      ...(example ? { example } : {}),
+      ...exampleFields,
     };
   }
 
@@ -44,6 +52,6 @@ export function assembleWord(id: string, raw: RawEntry, enriched: EnrichedFields
     pos: raw.pos,
     lemma: raw.lemma,
     en: enriched.en,
-    ...(example ? { example } : {}),
+    ...exampleFields,
   };
 }
