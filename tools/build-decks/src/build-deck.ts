@@ -72,8 +72,15 @@ export async function buildDeck(opts: BuildOptions): Promise<{ written: string |
   const text = JSON.stringify(sortKeys(deck), null, 2) + "\n";
   await fs.mkdir(opts.outputDir, { recursive: true });
   const tmp = `${target}.tmp`;
-  await fs.writeFile(tmp, text);
-  await fs.rename(tmp, target);
+  try {
+    await fs.writeFile(tmp, text);
+    await fs.rename(tmp, target);
+  } catch (err) {
+    // Best-effort cleanup of the temp file so we don't leave a stale
+    // de-<lvl>.json.tmp behind if writeFile or rename fails.
+    await fs.unlink(tmp).catch(() => {});
+    throw err;
+  }
   console.log(`[${opts.level}] wrote ${target} (${words.length} words)`);
   return { written: target, entries: words.length, dropped };
 }
