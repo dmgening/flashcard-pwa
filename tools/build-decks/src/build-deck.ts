@@ -1,12 +1,11 @@
 // tools/build-decks/src/build-deck.ts
 import fs from "node:fs/promises";
 import path from "node:path";
-import pLimit from "p-limit";
 import type { Level, RawEntry } from "./sources/types";
 import { IlkermeliksitkiSource } from "./sources/ilkermeliksitki";
 import { FileCache } from "./cache";
 import { OpenAiCompatibleClient, type LlmClient } from "./llm-client";
-import { enrich } from "./enrich";
+import { enrichBatch } from "./enrich";
 import { assembleWord } from "./assemble";
 import { validateDeck } from "./validate";
 import { slugify, assignUniqueIds } from "./slug";
@@ -43,13 +42,11 @@ export async function buildDeck(opts: BuildOptions): Promise<{ written: string |
   const raws = await source.fetch(opts.level);
   console.log(`[${opts.level}] parsed ${raws.length} entries from source`);
 
-  const limit = pLimit(opts.concurrency ?? 8);
-  const enriched = await Promise.all(raws.map((r: RawEntry) =>
-    limit(async () => {
-      const e = await enrich(r, client, cache, { bypassRead: opts.noCache });
-      return { raw: r, fields: e };
-    })
-  ));
+  const enrichedMap = await enrichBatch(raws, client, cache, {
+    bypassRead: opts.noCache,
+    concurrency: opts.concurrency,
+  });
+  const enriched = raws.map((r: RawEntry) => ({ raw: r, fields: enrichedMap.get(r.lemma) ?? null }));
 
   const kept = enriched.filter((x) => x.fields !== null) as Array<{ raw: RawEntry; fields: NonNullable<typeof enriched[number]["fields"]> }>;
   const dropped = enriched.length - kept.length;

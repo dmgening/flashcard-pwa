@@ -9,3 +9,18 @@ export const enrichedFieldsSchema = z.object({
 });
 
 export type EnrichedFields = z.infer<typeof enrichedFieldsSchema>;
+
+// Batch response: one LLM call covers many words. The model returns
+// `{ results: [{ idx, ...EnrichedFields }] }`. `idx` ties each item back
+// to its slot in the input batch so we can match results to lemmas even
+// if the model omits, reorders, or duplicates items.
+export const batchItemSchema = enrichedFieldsSchema.extend({
+  idx: z.number().int().min(0),
+});
+
+export const batchResponseSchema = z.object({
+  results: z.array(batchItemSchema),
+});
+
+export type BatchItem = z.infer<typeof batchItemSchema>;
+export type BatchResponse = z.infer<typeof batchResponseSchema>;

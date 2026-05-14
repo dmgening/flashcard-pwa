@@ -1,6 +1,13 @@
 // tools/build-decks/src/llm-client.ts
 import OpenAI from "openai";
-import "dotenv/config";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import dotenv from "dotenv";
+
+// Load .env from the repo root, not the CWD — this script is typically run
+// from the workspace directory, where the user's .env doesn't live.
+const here = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(here, "../../..", ".env") });
 
 export type LlmRequest = {
   prompt: string;
