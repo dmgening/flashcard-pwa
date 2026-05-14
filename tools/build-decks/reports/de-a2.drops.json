@@ -1,0 +1,749 @@
+{
+  "level": "A2",
+  "source": 1239,
+  "built": 1116,
+  "dropped": 122,
+  "drops": [
+    {
+      "lemma": "ankommen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wann kommt dieser Zug in Hamburg an?"
+    },
+    {
+      "lemma": "basteln",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "hat gebastelt"
+    },
+    {
+      "lemma": "bedanken (sich)",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich möchte mich noch einmal sehr herzlich für Ihre Hilfe bedanken."
+    },
+    {
+      "lemma": "beeilen (sich)",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Kannst du dich bitte beeilen? Der Bus fährt gleich ab!"
+    },
+    {
+      "lemma": "beraten",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Unsere Sekretärin berät Sie gern, wenn Sie Fragen haben."
+    },
+    {
+      "lemma": "bleiben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wir bleiben drei Tage in Berlin."
+    },
+    {
+      "lemma": "da",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Welche Bluse nehmen Sie? - Die da."
+    },
+    {
+      "lemma": "ist dabei gewesen",
+      "pos": "verb",
+      "plural": null
+    },
+    {
+      "lemma": "dafür/dagegen sein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich bin dafür/dagegen."
+    },
+    {
+      "lemma": "ist dafür/dagegen",
+      "pos": "verb",
+      "plural": null
+    },
+    {
+      "lemma": "war dafür/dagegen",
+      "pos": "verb",
+      "plural": null
+    },
+    {
+      "lemma": "ist dafür/dagegen gewesen",
+      "pos": "verb",
+      "plural": null
+    },
+    {
+      "lemma": "daneben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Du weißt doch, wo die Post ist. Daneben ist die Bank."
+    },
+    {
+      "lemma": "Dank (Sg.)",
+      "pos": "noun",
+      "article": "der",
+      "plural": null,
+      "example_de": "Vielen Dank!"
+    },
+    {
+      "lemma": "danke",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Soll ich Ihnen helfen? - Sehr freundlich, ja danke!"
+    },
+    {
+      "lemma": "danken, dankt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich danke Ihnen für die Einladung."
+    },
+    {
+      "lemma": "hat gedankt",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "dann",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich muss noch schnell zur Post, dann komme ich."
+    },
+    {
+      "lemma": "dass",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Rico hat gesagt, dass er auch zur Party kommt."
+    },
+    {
+      "lemma": "Datei",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Dateien",
+      "example_de": "Wo hast du die Datei gespeichert?"
+    },
+    {
+      "lemma": "Datum",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Datumen",
+      "example_de": "Bitte Datum und Unterschrift nicht vergessen!"
+    },
+    {
+      "lemma": "dauern, dauert",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Wie lange dauert die Pause? - Eine halbe Stunde."
+    },
+    {
+      "lemma": "hat gedauert",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "denken, denkt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich denke, du hast recht."
+    },
+    {
+      "lemma": "hat gedacht",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "deshalb",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich bin krank. Deshalb komme ich heute nicht ins Büro."
+    },
+    {
+      "lemma": "deutlich",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Sprechen Sie bitte deutlich!"
+    },
+    {
+      "lemma": "dick",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich bin zu dick. Ich muss weniger essen."
+    },
+    {
+      "lemma": "Ding",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Dinge",
+      "example_de": "Gib mir bitte mal das Ding da drüben!"
+    },
+    {
+      "lemma": "direkt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Wir wohnen direkt über dem Café."
+    },
+    {
+      "lemma": "Disco",
+      "pos": "noun",
+      "article": "die",
+      "plural": null,
+      "example_de": "Wir gehen heute Abend in die Disco/Disko."
+    },
+    {
+      "lemma": "doch",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Hast du keinen Hunger? - Doch, ich bin sehr hungrig."
+    },
+    {
+      "lemma": "Doppelzimmer",
+      "pos": "noun",
+      "article": "das",
+      "plural": null,
+      "example_de": "Möchten Sie ein Doppelzimmer oder ein Einzelzimmer?"
+    },
+    {
+      "lemma": "Dorf",
+      "pos": "noun",
+      "article": "das",
+      "plural": null,
+      "example_de": "Unser Dorf liegt direkt an der Autobahn."
+    },
+    {
+      "lemma": "dort",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Dort ist unser Haus."
+    },
+    {
+      "lemma": "dringend",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Bitte kommen Sie schnell. Es ist dringend."
+    },
+    {
+      "lemma": "drücken, drückt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "An dieser Tür musst du drücken, nicht ziehen, dann geht sie auf."
+    },
+    {
+      "lemma": "drucken, druckt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Wähle einfach „Datei drucken“!"
+    },
+    {
+      "lemma": "Drucker",
+      "pos": "noun",
+      "article": "der",
+      "plural": null,
+      "example_de": "Mein Drucker ist kaputt."
+    },
+    {
+      "lemma": "dumm",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich finde den Film dumm."
+    },
+    {
+      "lemma": "dünn",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Das Buch ist sehr dünn. Es hat nur 40 Seiten."
+    },
+    {
+      "lemma": "hat eingekauft",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "enden, hat geendet",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Der Kurs endet in einer Woche."
+    },
+    {
+      "lemma": "hat entschuldigt",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "hat erinnert",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "erkältet sein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Lisa ist erkältet. Sie kann heute nicht zur Schule gehen."
+    },
+    {
+      "lemma": "ist erkältet gewesen",
+      "pos": "verb",
+      "plural": null
+    },
+    {
+      "lemma": "hat erlaubt",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "ist erlaubt gewesen",
+      "pos": "verb",
+      "plural": null
+    },
+    {
+      "lemma": "erreicht",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "hat erreicht",
+      "pos": "other",
+      "plural": null
+    },
+    {
+      "lemma": "joggen, joggt, ist/hat gejoggt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich jogge gern im Park."
+    },
+    {
+      "lemma": "kaufen, kauft, hat gekauft",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Tim kauft sich ein neues Auto."
+    },
+    {
+      "lemma": "kennen, kennt, hat gekannt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Kennen Sie diese Frau? – Nein, leider nicht."
+    },
+    {
+      "lemma": "kennenlernen, lernt kennen, hat kennengelernt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Wo habt ihr euch kennengelernt? – Wir haben uns in München kennengelernt."
+    },
+    {
+      "lemma": "klappen, klappt, hat geklappt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Können wir uns heute Mittag treffen? – Ja, das klappt."
+    },
+    {
+      "lemma": "klein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Unsere Wohnung ist sehr klein."
+    },
+    {
+      "lemma": "kochen, kocht, hat gekocht",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Herr Georgi kann gut kochen."
+    },
+    {
+      "lemma": "kommen, kommt, ist gekommen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Woher kommen Sie? – Aus Frankreich."
+    },
+    {
+      "lemma": "kümmern (sich), kümmert sich, hat sich gekümmert",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Sonja kann nicht arbeiten. Sie muss sich um ihre Tochter kümmern."
+    },
+    {
+      "lemma": "kündigen, kündigt, hat gekündigt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Meine Arbeit gefällt mir nicht mehr. Ich habe heute gekündigt."
+    },
+    {
+      "lemma": "lachen, lacht, hat gelacht",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Die Kinder lachen über den Witz."
+    },
+    {
+      "lemma": "lassen, lässt, hat gelassen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Lass mich in Ruhe!"
+    },
+    {
+      "lemma": "laufen, läuft, ist gelaufen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich gehe jeden Morgen laufen."
+    },
+    {
+      "lemma": "leben, lebt, hat gelebt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Sie lebt bei ihrer Schwester."
+    },
+    {
+      "lemma": "legen, legt, hat gelegt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Legen Sie das Buch auf den Tisch."
+    },
+    {
+      "lemma": "leidtun/leid tun, tut leid, hat leidgetan",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Es tut mir leid, dass ich nicht kommen kann."
+    },
+    {
+      "lemma": "liegen, liegt, hat/ist gelegen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Die Zeitung liegt auf dem Tisch."
+    },
+    {
+      "lemma": "man",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wie schreibt man das?"
+    },
+    {
+      "lemma": "nach",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich gehe jetzt nach Hause."
+    },
+    {
+      "lemma": "Nachricht",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Nachrichten",
+      "example_de": "Ich sehe abends immer die Nachrichten im Fernsehen."
+    },
+    {
+      "lemma": "neben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Neben mir ist noch ein Platz frei."
+    },
+    {
+      "lemma": "nebenan",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Das ist José. Er wohnt nebenan."
+    },
+    {
+      "lemma": "nein",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Möchten Sie ein Stück Kuchen? – Nein, danke."
+    },
+    {
+      "lemma": "notieren, notiert, hat notiert",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Notieren Sie bitte alle wichtigen Informationen."
+    },
+    {
+      "lemma": "Nummer",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Nummern",
+      "example_de": "Sie haben Zimmer Nummer zwölf."
+    },
+    {
+      "lemma": "oben",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich wohne oben im 4. Stock."
+    },
+    {
+      "lemma": "offen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ist das Fenster im Bad noch offen?"
+    },
+    {
+      "lemma": "öffnen, öffnet, hat geöffnet",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich öffne die Tür."
+    },
+    {
+      "lemma": "organisieren, organisiert, hat organisiert",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Frau Gomez organisiert unseren Ausflug."
+    },
+    {
+      "lemma": "probieren, probiert, hat probiert",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Möchten Sie den Käse probieren?"
+    },
+    {
+      "lemma": "Programm",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Programme",
+      "example_de": "Dieses Programm im Radio interessiert mich nicht."
+    },
+    {
+      "lemma": "prüfen, prüft, hat geprüft",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Bitte prüfen Sie die Rechnung sofort."
+    },
+    {
+      "lemma": "putzen, putzt, hat geputzt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich muss heute noch das Bad putzen."
+    },
+    {
+      "lemma": "schmecken, schmeckt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Schmeckt dir die Suppe?"
+    },
+    {
+      "lemma": "schneiden (sich), schneidet",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Das Messer schneidet nicht gut."
+    },
+    {
+      "lemma": "schneien, schneit",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Morgen schneit es."
+    },
+    {
+      "lemma": "schon",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ist das Essen schon fertig?"
+    },
+    {
+      "lemma": "schön",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Schöne Ferien!"
+    },
+    {
+      "lemma": "schreiben, schreibt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich schreibe dir eine E-Mail."
+    },
+    {
+      "lemma": "super",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Der Film ist super."
+    },
+    {
+      "lemma": "Supermarkt",
+      "pos": "noun",
+      "article": "der",
+      "plural": null,
+      "example_de": "Ich kaufe oft im Supermarkt ein."
+    },
+    {
+      "lemma": "Suppe",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Suppen",
+      "example_de": "Schmeckt dir die Suppe?"
+    },
+    {
+      "lemma": "süß",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich finde die Torte zu süß."
+    },
+    {
+      "lemma": "Süßigkeiten",
+      "pos": "noun",
+      "article": "die",
+      "plural": null,
+      "example_de": "Welche Süßigkeiten isst du am liebsten?"
+    },
+    {
+      "lemma": "sympathisch",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Der neue Chef ist sehr sympathisch."
+    },
+    {
+      "lemma": "Tablet",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Tablets",
+      "example_de": "Hast du ein Tablet? - Nein, ich habe einen Laptop und ein Handy."
+    },
+    {
+      "lemma": "Tablette",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Tabletten",
+      "example_de": "Du sollst am Abend zwei Tabletten nehmen."
+    },
+    {
+      "lemma": "Tafel",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Tafeln",
+      "example_de": "Der Lehrer schreibt das neue Wort an die Tafel."
+    },
+    {
+      "lemma": "Tasche",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Taschen",
+      "example_de": "Ich habe die Schlüssel in der Tasche."
+    },
+    {
+      "lemma": "Taschengeld (Sg.)",
+      "pos": "noun",
+      "article": "das",
+      "plural": null,
+      "example_de": "Wie viel Taschengeld bekommen deine Kinder?"
+    },
+    {
+      "lemma": "Tasse",
+      "pos": "noun",
+      "article": "die",
+      "plural": "Tassen",
+      "example_de": "Möchten Sie eine Tasse Kaffee?"
+    },
+    {
+      "lemma": "Taxi",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Taxis",
+      "example_de": "Bitte rufen Sie mir ein Taxi."
+    },
+    {
+      "lemma": "Team",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Teams",
+      "example_de": "Ich arbeite gern in einem Team."
+    },
+    {
+      "lemma": "Tee",
+      "pos": "noun",
+      "article": "der",
+      "plural": "Tees",
+      "example_de": "Ich trinke morgens immer Tee."
+    },
+    {
+      "lemma": "Telefon",
+      "pos": "noun",
+      "article": "das",
+      "plural": "Telefone",
+      "example_de": "Darf ich bitte Ihr Telefon benutzen?"
+    },
+    {
+      "lemma": "telefonieren, hat telefoniert",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Er hat den ganzen Abend telefoniert."
+    },
+    {
+      "lemma": "tragen, trägt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich kann den Koffer nicht tragen, er ist zu schwer."
+    },
+    {
+      "lemma": "trocken",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Die Wäsche ist bald trocken."
+    },
+    {
+      "lemma": "übermorgen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Morgen habe ich frei. Ich komme übermorgen wieder ins Büro."
+    },
+    {
+      "lemma": "verkaufen, verkauft",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Er verkauft sein altes Auto."
+    },
+    {
+      "lemma": "von",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Das Auto von Felix ist kaputt."
+    },
+    {
+      "lemma": "vorgestern",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Er hat mich vorgestern angerufen."
+    },
+    {
+      "lemma": "vorstellen (sich), vorgestellt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Wir wollen uns kennenlernen. Können Sie sich bitte vorstellen?"
+    },
+    {
+      "lemma": "wann",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wann bist du fertig?"
+    },
+    {
+      "lemma": "werden, wird",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Mein Sohn will Arzt werden."
+    },
+    {
+      "lemma": "willkommen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Herzlich willkommen in Berlin!"
+    },
+    {
+      "lemma": "wissen, weiß",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Weißt du, wie der Hausmeister heißt?"
+    },
+    {
+      "lemma": "wohin",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Wohin fährt dieser Bus? - Nach Dresden."
+    },
+    {
+      "lemma": "wohnen, wohnt",
+      "pos": "other",
+      "plural": null,
+      "example_de": "Ich wohne in Kiel."
+    },
+    {
+      "lemma": "wünschen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Ich wünsche mir eine Kamera zum Geburtstag."
+    },
+    {
+      "lemma": "zwischen",
+      "pos": "verb",
+      "plural": null,
+      "example_de": "Heidelberg liegt zwischen Frankfurt und Stuttgart."
+    }
+  ]
+}
