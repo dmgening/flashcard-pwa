@@ -1,11 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
-import { Layers, BookOpen, BarChart3 } from "lucide-react";
+import { Layers, BarChart3 } from "lucide-react";
 import { useAnim } from "@/lib/transitions";
 
 type Tab = { to: string; label: string; Icon: typeof Layers; matchPrefix: string };
+// Decks is merged into Study: tapping Study returns you to the last deck;
+// the deck picker is reachable from the Study header.
 const TABS: Tab[] = [
-  { to: "/decks", label: "Decks", Icon: BookOpen, matchPrefix: "/decks" },
   { to: "/study", label: "Study", Icon: Layers, matchPrefix: "/study" },
   { to: "/stats", label: "Stats", Icon: BarChart3, matchPrefix: "/stats" },
 ];

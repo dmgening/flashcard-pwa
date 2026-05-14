@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 import { loadDeck } from "@/lib/deck-loader";
 import type { Deck } from "@/lib/schema";
 import { getStatsForDeck } from "@/db/stats";
@@ -61,8 +62,13 @@ export function StudyRoute() {
   return (
     <div className="flex flex-col h-[calc(100dvh-64px)]">
       <header className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
-        <Link to="/decks" className="text-neutral-400">←</Link>
-        <div className="text-sm font-semibold">{deck.name}</div>
+        <Link
+          to="/decks"
+          className="flex items-center gap-1 text-sm font-semibold text-neutral-100 active:text-sky-300"
+        >
+          {deck.name}
+          <ChevronDown size={14} className="text-neutral-500" />
+        </Link>
         <div className="text-xs text-neutral-400">{pct}%</div>
       </header>
       <div className="h-[3px] bg-neutral-900">
