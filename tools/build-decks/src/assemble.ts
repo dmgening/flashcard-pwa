@@ -22,8 +22,11 @@ export function assembleWord(id: string, raw: RawEntry, enriched: EnrichedFields
   }
 
   if (raw.pos === "verb") {
-    if (!enriched.aux || !enriched.partizip) {
-      throw new Error(`assembleWord: verb ${raw.lemma} missing aux or partizip`);
+    if (!enriched.aux) {
+      throw new Error(`assembleWord: verb ${raw.lemma} missing aux`);
+    }
+    if (!enriched.partizip) {
+      throw new Error(`assembleWord: verb ${raw.lemma} missing partizip`);
     }
     return {
       id,

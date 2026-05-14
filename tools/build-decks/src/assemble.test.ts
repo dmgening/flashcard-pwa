@@ -58,15 +58,16 @@ describe("assembleWord", () => {
     expect(w.example).toBe("SOURCE");
   });
 
-  it("throws if a verb is missing aux or partizip", () => {
+  it("throws separately on missing aux vs missing partizip, naming the lemma", () => {
     const raw: RawEntry = { level: "A1", raw: "gehen", lemma: "gehen", pos: "verb", senses: 1 };
-    expect(() => assembleWord("de-a1-gehen", raw, { en: ["to go"] })).toThrow();
+    expect(() => assembleWord("de-a1-gehen", raw, { en: ["to go"] })).toThrow(/gehen.*aux/);
+    expect(() => assembleWord("de-a1-gehen", raw, { en: ["to go"], aux: "sein" })).toThrow(/gehen.*partizip/);
   });
 
-  it("throws if a noun is missing the article", () => {
+  it("throws if a noun is missing the article, naming the lemma", () => {
     const raw: RawEntry = {
       level: "A1", raw: "Hund", lemma: "Hund", pos: "noun", senses: 1,
     };
-    expect(() => assembleWord("de-a1-hund", raw, { en: ["dog"] })).toThrow();
+    expect(() => assembleWord("de-a1-hund", raw, { en: ["dog"] })).toThrow(/Hund.*article/);
   });
 });
