@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import type { Deck, Word } from "@/lib/schema";
 import { useStudySession } from "./use-study-session";
 import { pickDistractors } from "@/lib/distractors";
 import { speak, ttsAvailable } from "@/lib/tts";
 import { useSettingsStore } from "@/store/settings-store";
+import { useAnim } from "@/lib/transitions";
 
 function articleColor(article: "der" | "die" | "das"): string {
   return { der: "text-article-der", die: "text-article-die", das: "text-article-das" }[article];
@@ -24,6 +26,7 @@ type Choice = { word: Word; correct: boolean };
 
 export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
   const { current, onResult } = useStudySession(deck);
+  const anim = useAnim();
   const [picked, setPicked] = useState<string | null>(null);
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const soundOn = useSettingsStore((s) => s.soundOn);
@@ -69,12 +72,21 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
     <div className="h-full flex flex-col p-4">
       <button onClick={onExit} className="self-start text-xs text-neutral-500 mb-3">← back to flows</button>
 
-      <div className="text-center mb-5">
-        <PromptWord word={current} />
-        {ttsAvailable() && soundOn && (
-          <button onClick={() => speak(current.lemma, ttsVoiceURI)} className="text-lg opacity-50 mt-2">🔊</button>
-        )}
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current.id}
+          className="text-center mb-5"
+          initial={{ y: 24, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -24, opacity: 0 }}
+          transition={anim.fade}
+        >
+          <PromptWord word={current} />
+          {ttsAvailable() && soundOn && (
+            <button onClick={() => speak(current.lemma, ttsVoiceURI)} className="text-lg opacity-50 mt-2">🔊</button>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       <div className="space-y-2">
         {choices.map((c) => {
@@ -90,9 +102,17 @@ export function McFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) {
             dim ? "opacity-45" : "",
           ].join(" ");
           return (
-            <button key={c.word.id} className={classes} onClick={() => pick(c)} disabled={picked !== null}>
+            <motion.button
+              key={c.word.id}
+              className={classes}
+              onClick={() => pick(c)}
+              disabled={picked !== null}
+              whileTap={anim.reduced ? undefined : { scale: 0.97 }}
+              animate={showWrong && !anim.reduced ? { x: [0, -8, 8, -6, 6, 0] } : { x: 0 }}
+              transition={showWrong ? { duration: 0.28 } : anim.springSnappy}
+            >
               {c.word.en[0]}{showCorrect ? " ✓" : showWrong ? " ✕" : ""}
-            </button>
+            </motion.button>
           );
         })}
       </div>
