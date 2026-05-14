@@ -141,15 +141,15 @@ export function SwipeFlow({ deck, onExit }: { deck: Deck; onExit: () => void }) 
               <div className="absolute bottom-4 text-[10px] uppercase tracking-widest text-neutral-600">tap to reveal</div>
             </div>
 
-            {/* Drag hint stamps — opacity driven by dragX */}
+            {/* Drag tint — opacity driven by dragX, color signals hit vs miss */}
             <motion.div
               style={{ opacity: hitOpacity }}
-              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rotate-[8deg] border-2 border-emerald-400 text-emerald-400 px-2 py-1 text-xs font-bold tracking-wider rounded"
-            >✓ GOT IT</motion.div>
+              className="pointer-events-none absolute inset-0 bg-emerald-800/80 rounded-2xl"
+            />
             <motion.div
               style={{ opacity: missOpacity }}
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 -rotate-[8deg] border-2 border-rose-400 text-rose-400 px-2 py-1 text-xs font-bold tracking-wider rounded"
-            >✕ MISS</motion.div>
+              className="pointer-events-none absolute inset-0 bg-rose-800/80 rounded-2xl"
+            />
           </CardFace>
 
           {revealed && (
