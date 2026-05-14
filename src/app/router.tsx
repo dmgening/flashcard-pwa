@@ -1,11 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { DecksRoute } from "@/routes/decks";
 import { StudyRoute } from "@/routes/study";
 import { StatsRoute } from "@/routes/stats";
 import { SettingsRoute } from "@/routes/settings";
 import { TabBar } from "./tab-bar";
 import { getSettings } from "@/db/dexie";
+import { useAnim } from "@/lib/transitions";
 
 const DEFAULT_DECK_ID = "de-a1";
 
@@ -15,6 +17,21 @@ function Layout() {
       <Outlet />
       <TabBar />
     </div>
+  );
+}
+
+function PageFrame({ children }: { children: React.ReactNode }) {
+  const anim = useAnim();
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: anim.reduced ? 0 : 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: anim.reduced ? 0 : -8 }}
+      transition={anim.fade}
+      className="h-full"
+    >
+      {children}
+    </motion.div>
   );
 }
 
@@ -40,21 +57,33 @@ function StatsRedirect() {
   return ready ? null : <div className="p-4 text-neutral-500">Loading…</div>;
 }
 
-export function AppRouter() {
+function AnimatedRoutes() {
+  const location = useLocation();
+  // Key on the top-level route segment so swapping deck inside `/study/...`
+  // doesn't trigger a page transition.
+  const topSegment = location.pathname.split("/")[1] || "root";
   return (
-    <BrowserRouter>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={topSegment}>
         <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/decks" replace />} />
-          <Route path="/decks" element={<DecksRoute />} />
-          <Route path="/study" element={<StudyRedirect />} />
-          <Route path="/study/:deckId" element={<StudyRoute />} />
-          <Route path="/stats" element={<StatsRedirect />} />
-          <Route path="/stats/:deckId" element={<StatsRoute />} />
-          <Route path="/settings" element={<SettingsRoute />} />
+          <Route path="/decks" element={<PageFrame><DecksRoute /></PageFrame>} />
+          <Route path="/study" element={<PageFrame><StudyRedirect /></PageFrame>} />
+          <Route path="/study/:deckId" element={<PageFrame><StudyRoute /></PageFrame>} />
+          <Route path="/stats" element={<PageFrame><StatsRedirect /></PageFrame>} />
+          <Route path="/stats/:deckId" element={<PageFrame><StatsRoute /></PageFrame>} />
+          <Route path="/settings" element={<PageFrame><SettingsRoute /></PageFrame>} />
           <Route path="*" element={<Navigate to="/decks" replace />} />
         </Route>
       </Routes>
+    </AnimatePresence>
+  );
+}
+
+export function AppRouter() {
+  return (
+    <BrowserRouter>
+      <AnimatedRoutes />
     </BrowserRouter>
   );
 }
