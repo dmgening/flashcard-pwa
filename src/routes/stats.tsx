@@ -5,6 +5,7 @@ import type { DeckId } from "@/lib/deck-loader";
 import type { Deck } from "@/lib/schema";
 import { getStatsForDeck, bucket, hardestWords } from "@/db/stats";
 import type { StatRow } from "@/db/dexie";
+import { DeckLoadingSkeleton } from "@/components/skeleton";
 
 export function StatsRoute() {
   const { deckId } = useParams<{ deckId: string }>();
@@ -27,7 +28,7 @@ export function StatsRoute() {
     return () => { cancelled = true; };
   }, [deckId]);
 
-  if (!deck) return <div className="p-4 text-neutral-500">Loading…</div>;
+  if (!deck) return <DeckLoadingSkeleton />;
 
   // recordAttempt always writes attempts >= 1, so any row in `stats` is past the
   // "new" stage. A word is "new" iff it has no row at all in this deck.

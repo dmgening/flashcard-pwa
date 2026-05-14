@@ -8,6 +8,7 @@ import { SettingsRoute } from "@/routes/settings";
 import { TabBar } from "./tab-bar";
 import { getSettings } from "@/db/dexie";
 import { useAnim } from "@/lib/transitions";
+import { DeckLoadingSkeleton } from "@/components/skeleton";
 
 const DEFAULT_DECK_ID = "de-a1";
 
@@ -49,12 +50,12 @@ function useActiveDeckRedirect(toPath: (id: string) => string) {
 
 function StudyRedirect() {
   const ready = useActiveDeckRedirect((id) => `/study/${id}`);
-  return ready ? null : <div className="p-4 text-neutral-500">Loading…</div>;
+  return ready ? null : <DeckLoadingSkeleton />;
 }
 
 function StatsRedirect() {
   const ready = useActiveDeckRedirect((id) => `/stats/${id}`);
-  return ready ? null : <div className="p-4 text-neutral-500">Loading…</div>;
+  return ready ? null : <DeckLoadingSkeleton />;
 }
 
 function AnimatedRoutes() {

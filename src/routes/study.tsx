@@ -5,6 +5,7 @@ import type { Deck } from "@/lib/schema";
 import { getStatsForDeck } from "@/db/stats";
 import { computeMastery } from "@/lib/mastery";
 import { useSessionStore } from "@/store/session-store";
+import { DeckLoadingSkeleton } from "@/components/skeleton";
 import { SwipeFlow } from "@/flows/swipe-flow";
 import { McFlow } from "@/flows/mc-flow";
 import { TypeFlow } from "@/flows/type-flow";
@@ -49,7 +50,7 @@ export function StudyRoute() {
     return <div className="p-4 text-red-400">{error} <Link to="/decks" className="underline">Back</Link></div>;
   }
   if (!deck) {
-    return <div className="p-4 text-neutral-500">Loading…</div>;
+    return <DeckLoadingSkeleton />;
   }
   if (deck.words.length === 0) {
     return <div className="p-4 text-neutral-400">This deck has no words.</div>;
