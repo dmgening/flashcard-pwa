@@ -3,12 +3,14 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "workspaces": ["tools/build-decks"],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:decks": "npm run -w @flashcard-pwa/build-decks build:decks"
   },
   "dependencies": {
     "dexie": "^4.4.2",
